@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #000000;
+  --color-surface: #0a0a0a;
+  --color-surface-2: #111111;
+  --color-border: #1a1a1a;
+  --color-border-strong: #222222;
+  --color-text: #ffffff;
+  --color-text-secondary: #888888;
+  --color-accent: #4aff91;
+  --color-accent-glow: rgba(74, 255, 145, 0.15);
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-2: var(--color-surface-2);
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-text: var(--color-text);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-accent: var(--color-accent);
+  --color-accent-glow: var(--color-accent-glow);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-bg);
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #000000;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Custom cursor (desktop only, enabled via JS when pointer supports hover) */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #ffffff;
+  pointer-events: none;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: difference;
+  transition: width 0.3s ease, height 0.3s ease;
+  will-change: transform, width, height;
+}
+
+.custom-cursor--link {
+  width: 16px;
+  height: 16px;
+}
+
+.custom-cursor--view {
+  width: 64px;
+  height: 64px;
+}
+
+.custom-cursor__label {
+  opacity: 0;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: #000000;
+  transition: opacity 0.2s ease;
+}
+
+.custom-cursor--view .custom-cursor__label {
+  opacity: 1;
+}
+
+body.cursor-none,
+body.cursor-none a,
+body.cursor-none button {
+  cursor: none;
+}
+
+/* Technologies marquee */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 32s linear infinite;
+}
+
+.marquee-track--reverse {
+  animation-name: marquee-right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+.text-reveal-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.text-reveal-word > span {
+  display: inline-block;
+  will-change: transform;
+}
