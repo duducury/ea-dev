@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import { useMediaQuery } from "@/lib/useMediaQuery";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 type CursorVariant = "default" | "link" | "view";
 
 export default function CustomCursor() {
+  const { t } = useLanguage();
   const dotRef = useRef<HTMLDivElement>(null);
   const [variant, setVariant] = useState<CursorVariant>("default");
   const enabled = useMediaQuery("(hover: hover) and (pointer: fine)");
@@ -59,7 +61,7 @@ export default function CustomCursor() {
       aria-hidden="true"
       className={`custom-cursor custom-cursor--${variant}`}
     >
-      <span className="custom-cursor__label">VIEW</span>
+      <span className="custom-cursor__label">{t.cursor.view}</span>
     </div>
   );
 }

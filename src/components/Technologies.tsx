@@ -25,7 +25,7 @@ function Row({ reverse = false }: { reverse?: boolean }) {
 export default function Technologies() {
   return (
     <section
-      aria-label="Technologies we use"
+      aria-label="Technologies"
       className="border-y border-border py-20"
     >
       <div className="flex flex-col gap-6">

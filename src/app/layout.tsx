@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import CustomCursor from "@/components/CustomCursor";
+import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,13 +20,12 @@ const siteUrl = "https://eadev.com"; // TODO: replace with the real production d
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "EA Dev — Websites & Digital Systems",
+  title: "EA Dev — Sites & Sistemas Digitais",
   description:
-    "EA Dev is a developer studio built by Eduardo and Auler. We create websites, web systems and custom digital solutions for businesses.",
+    "EA Dev é um estúdio de desenvolvimento criado por Eduardo e Auler. Criamos sites, sistemas web e soluções digitais sob medida para empresas.",
   openGraph: {
-    title: "EA Dev — Websites & Digital Systems",
-    description:
-      "Websites, systems & digital experiences built by Eduardo & Auler.",
+    title: "EA Dev — Sites & Sistemas Digitais",
+    description: "Sites, sistemas e experiências digitais construídos por Eduardo & Auler.",
     images: ["/og-image.png"], // TODO: create a real og-image.png in /public
   },
 };
@@ -33,12 +33,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="pt"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-bg text-text">
-        <CustomCursor />
-        {children}
+        <LanguageProvider>
+          <CustomCursor />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

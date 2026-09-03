@@ -1,31 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Globe, Database, ShoppingCart, Sparkles } from "lucide-react";
 import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-const services = [
-  {
-    title: "Websites",
-    description: "Professional websites designed to represent your business.",
-  },
-  {
-    title: "Web Systems",
-    description:
-      "Custom systems with databases, authentication and business logic.",
-  },
-  {
-    title: "E-commerce & Catalogs",
-    description: "Digital catalogs and online sales experiences.",
-  },
-  {
-    title: "Custom Solutions",
-    description:
-      "Software designed around the specific needs of your business.",
-  },
-];
+const icons = [Globe, Database, ShoppingCart, Sparkles];
 
 export default function Services() {
+  const { t } = useLanguage();
   const rootRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
@@ -82,26 +66,32 @@ export default function Services() {
     <section id="services" ref={rootRef} className="px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-7xl">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-          What we build
+          {t.services.eyebrow}
         </p>
         <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
-          Four ways we turn ideas into products.
+          {t.services.title}
         </h2>
 
         <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2">
-          {services.map((service) => (
-            <div
-              key={service.title}
-              onMouseEnter={handleEnter}
-              onMouseLeave={handleLeave}
-              className="service-card rounded-2xl border border-border bg-surface p-8 md:p-10"
-            >
-              <h3 className="text-2xl font-semibold text-text">
-                {service.title}
-              </h3>
-              <p className="mt-3 text-text-secondary">{service.description}</p>
-            </div>
-          ))}
+          {t.services.items.map((service, i) => {
+            const Icon = icons[i];
+            return (
+              <div
+                key={service.title}
+                onMouseEnter={handleEnter}
+                onMouseLeave={handleLeave}
+                className="service-card rounded-2xl border border-border bg-surface p-8 md:p-10"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-border-strong bg-black">
+                  <Icon className="h-6 w-6 text-accent" strokeWidth={1.5} />
+                </div>
+                <h3 className="mt-6 text-2xl font-semibold text-text">
+                  {service.title}
+                </h3>
+                <p className="mt-3 text-text-secondary">{service.description}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

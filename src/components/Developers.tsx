@@ -1,11 +1,14 @@
 "use client";
 
 import { useRef } from "react";
+import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
 import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { developers } from "@/data/developers";
 
 function DeveloperCard({ dev }: { dev: (typeof developers)[number] }) {
+  const { language } = useLanguage();
   const cardRef = useRef<HTMLDivElement>(null);
   const avatarRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
@@ -56,31 +59,33 @@ function DeveloperCard({ dev }: { dev: (typeof developers)[number] }) {
         <div>
           <h3 className="text-2xl font-bold text-text">{dev.name}</h3>
           <p className="text-sm uppercase tracking-widest text-text-secondary">
-            {dev.role}
+            {dev.role[language]}
           </p>
         </div>
       </div>
 
-      <p className="mt-4 text-text-secondary">{dev.bio}</p>
+      <p className="mt-4 text-text-secondary">{dev.bio[language]}</p>
 
-      <div className="mt-6 flex gap-4">
+      <div className="mt-6 flex gap-5">
         <a
           href={dev.github}
           target="_blank"
           rel="noopener noreferrer"
           data-cursor="link"
-          className="text-xs font-semibold uppercase tracking-widest text-text-secondary transition-colors hover:text-accent"
+          aria-label={`${dev.name} on GitHub`}
+          className="text-text-secondary transition-colors hover:text-accent"
         >
-          GitHub
+          <GithubIcon className="h-5 w-5" />
         </a>
         <a
           href={dev.linkedin}
           target="_blank"
           rel="noopener noreferrer"
           data-cursor="link"
-          className="text-xs font-semibold uppercase tracking-widest text-text-secondary transition-colors hover:text-accent"
+          aria-label={`${dev.name} on LinkedIn`}
+          className="text-text-secondary transition-colors hover:text-accent"
         >
-          LinkedIn
+          <LinkedinIcon className="h-5 w-5" />
         </a>
       </div>
     </div>
@@ -88,14 +93,16 @@ function DeveloperCard({ dev }: { dev: (typeof developers)[number] }) {
 }
 
 export default function Developers() {
+  const { t } = useLanguage();
+
   return (
     <section id="developers" className="px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-7xl">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-          Meet the Developers
+          {t.developers.eyebrow}
         </p>
         <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
-          Built by two developers.
+          {t.developers.title}
         </h2>
 
         <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2">

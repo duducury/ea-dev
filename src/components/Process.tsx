@@ -1,18 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Compass, PenTool, Code2, Rocket, TrendingUp } from "lucide-react";
 import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-const steps = [
-  { number: "01", title: "Discover", description: "Understand the business and its goals." },
-  { number: "02", title: "Design", description: "Create the visual direction and user experience." },
-  { number: "03", title: "Build", description: "Develop the website or system." },
-  { number: "04", title: "Launch", description: "Deploy, test and deliver." },
-  { number: "05", title: "Grow", description: "Improve and maintain the product." },
-];
+const icons = [Compass, PenTool, Code2, Rocket, TrendingUp];
 
 export default function Process() {
+  const { t } = useLanguage();
   const rootRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
@@ -46,25 +43,31 @@ export default function Process() {
     <section className="px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-5xl" ref={rootRef}>
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-          Process
+          {t.process.eyebrow}
         </p>
         <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
-          How we work.
+          {t.process.title}
         </h2>
 
         <div className="mt-16 flex flex-col">
-          {steps.map((step) => (
-            <div
-              key={step.number}
-              className="process-step flex flex-col gap-2 border-t border-border py-8 md:flex-row md:items-center md:gap-10"
-            >
-              <span className="font-mono text-sm text-accent">{step.number}</span>
-              <h3 className="text-2xl font-semibold text-text md:w-48">
-                {step.title}
-              </h3>
-              <p className="text-text-secondary">{step.description}</p>
-            </div>
-          ))}
+          {t.process.steps.map((step, i) => {
+            const Icon = icons[i];
+            return (
+              <div
+                key={step.number}
+                className="process-step flex flex-col gap-4 border-t border-border py-8 md:flex-row md:items-center md:gap-10"
+              >
+                <div className="flex items-center gap-4 md:w-56">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border-strong bg-surface">
+                    <Icon className="h-5 w-5 text-accent" strokeWidth={1.5} />
+                  </div>
+                  <span className="font-mono text-sm text-accent">{step.number}</span>
+                  <h3 className="text-2xl font-semibold text-text">{step.title}</h3>
+                </div>
+                <p className="text-text-secondary">{step.description}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

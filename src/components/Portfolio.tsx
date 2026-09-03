@@ -1,15 +1,25 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Building2, IceCreamCone, ShoppingBag, Sparkles, type LucideIcon } from "lucide-react";
 import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { projects, type Project } from "@/data/projects";
-import CaseStudy from "./CaseStudy";
+import ProjectPreview from "./ProjectPreview";
+
+const projectIcons: Record<string, LucideIcon> = {
+  "favela-store": ShoppingBag,
+  "united-flooring-america": Building2,
+  "dois-amores": IceCreamCone,
+};
 
 function ProjectCard({ project }: { project: Project }) {
-  const previewRef = useRef<HTMLDivElement>(null);
+  const { t, language } = useLanguage();
   const cardRef = useRef<HTMLElement>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
+  const Icon = projectIcons[project.slug] ?? ShoppingBag;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -22,7 +32,7 @@ function ProjectCard({ project }: { project: Project }) {
           y: 0,
           duration: 0.8,
           ease: "power3.out",
-          scrollTrigger: { trigger: cardRef.current, start: "top 82%" },
+          scrollTrigger: { trigger: cardRef.current, start: "top 85%" },
         }
       );
     }, cardRef);
@@ -43,48 +53,63 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <article
       ref={cardRef}
-      className="grid grid-cols-1 items-center gap-8 border-t border-border py-12 md:grid-cols-2 md:gap-14"
+      className="flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-surface transition-colors duration-300 hover:border-accent/50"
     >
       <div
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
-        className="order-2 overflow-hidden rounded-2xl border border-border md:order-1"
+        className="aspect-[4/3] overflow-hidden border-b border-border"
       >
         <a
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
           data-cursor="view"
-          aria-label={`Open ${project.name} in a new tab`}
-          className="block aspect-[4/3]"
+          aria-label={`${t.portfolio.visit} ${project.name}`}
+          className="block h-full w-full"
         >
-          {/* TODO: replace with a real screenshot of this project */}
-          <div
-            ref={previewRef}
-            className="flex h-full w-full items-center justify-center bg-surface text-4xl font-bold text-border-strong"
-          >
-            {project.name
-              .split(" ")
-              .map((w) => w[0])
-              .join("")}
+          <div ref={previewRef} className="h-full w-full">
+            <ProjectPreview url={project.url} Icon={Icon} accent={project.featured} />
           </div>
         </a>
       </div>
 
-      <div className="order-1 md:order-2">
+      <div className="flex flex-1 flex-col p-6 md:p-8">
+        {project.featured && (
+          <div className="mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-accent/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-accent">
+            <Sparkles className="h-3 w-3" strokeWidth={1.75} />
+            {t.portfolio.featured}
+          </div>
+        )}
+
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-          {project.category}
+          {project.category[language]}
         </p>
-        <h3 className="mt-4 text-[clamp(28px,4vw,44px)] font-bold leading-tight tracking-tight">
+        <h3 className="mt-3 text-2xl font-bold leading-tight tracking-tight">
           {project.name}
         </h3>
-        <p className="mt-4 text-text-secondary">{project.description}</p>
+        <p className="mt-3 text-sm text-text-secondary">
+          {project.description[language]}
+        </p>
 
-        <div className="mt-6 flex flex-wrap gap-2">
+        {project.badges && (
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {project.badges[language].map((badge) => (
+              <span
+                key={badge}
+                className="rounded-full border border-accent/30 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-accent"
+              >
+                {badge}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-4 flex flex-wrap gap-1.5">
           {project.technologies.map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-border-strong px-3 py-1 text-[11px] uppercase tracking-widest text-text-secondary"
+              className="rounded-full border border-border-strong px-2.5 py-1 text-[10px] uppercase tracking-wider text-text-secondary"
             >
               {tech}
             </span>
@@ -96,9 +121,9 @@ function ProjectCard({ project }: { project: Project }) {
           target="_blank"
           rel="noopener noreferrer"
           data-cursor="link"
-          className="mt-8 inline-block text-sm font-semibold uppercase tracking-widest text-text transition-colors hover:text-accent"
+          className="mt-6 inline-block text-sm font-semibold uppercase tracking-widest text-text transition-colors hover:text-accent"
         >
-          Visit Project →
+          {t.portfolio.visit}
         </a>
       </div>
     </article>
@@ -106,27 +131,20 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export default function Portfolio() {
-  const featured = projects.find((p) => p.featured);
-  const rest = projects.filter((p) => !p.featured);
+  const { t } = useLanguage();
 
   return (
     <section id="work" className="px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-7xl">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-          Portfolio
+          {t.portfolio.eyebrow}
         </p>
         <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
-          Selected Work
+          {t.portfolio.title}
         </h2>
 
-        {featured && (
-          <div className="mt-16">
-            <CaseStudy project={featured} />
-          </div>
-        )}
-
-        <div className="mt-4">
-          {rest.map((project) => (
+        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {projects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>

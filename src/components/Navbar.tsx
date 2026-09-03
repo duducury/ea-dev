@@ -1,18 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-const links = [
-  { label: "Work", href: "#work" },
-  { label: "Services", href: "#services" },
-  { label: "About", href: "#about" },
-  { label: "Developers", href: "#developers" },
-  { label: "Contact", href: "#contact" },
-];
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Navbar() {
+  const { t, language, toggleLanguage } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const links = [
+    { label: t.nav.work, href: "#work" },
+    { label: t.nav.services, href: "#services" },
+    { label: t.nav.about, href: "#about" },
+    { label: t.nav.developers, href: "#developers" },
+    { label: t.nav.contact, href: "#contact" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 8);
@@ -59,13 +61,27 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a
-          href="#contact"
-          data-cursor="link"
-          className="hidden rounded-full border border-accent px-5 py-2 text-xs font-semibold uppercase tracking-widest text-accent transition-colors hover:bg-accent hover:text-black md:inline-block"
-        >
-          Let&apos;s talk →
-        </a>
+        <div className="hidden items-center gap-5 md:flex">
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            data-cursor="link"
+            aria-label={t.langToggle.label}
+            className="flex items-center gap-1 text-xs font-semibold uppercase tracking-widest text-text-secondary transition-colors hover:text-text"
+          >
+            <span className={language === "pt" ? "text-accent" : ""}>PT</span>
+            <span aria-hidden="true">/</span>
+            <span className={language === "en" ? "text-accent" : ""}>EN</span>
+          </button>
+
+          <a
+            href="#contact"
+            data-cursor="link"
+            className="rounded-full border border-accent px-5 py-2 text-xs font-semibold uppercase tracking-widest text-accent transition-colors hover:bg-accent hover:text-black"
+          >
+            {t.nav.cta}
+          </a>
+        </div>
 
         <button
           type="button"
@@ -75,13 +91,13 @@ export default function Navbar() {
           className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
         >
           <span
-            className={`h-px w-6 bg-text transition-transform duration-300 ${
-              menuOpen ? "translate-y-[3.5px] rotate-45" : ""
+            className={`h-0.5 w-6 bg-text transition-transform duration-300 ${
+              menuOpen ? "translate-y-[4px] rotate-45" : ""
             }`}
           />
           <span
-            className={`h-px w-6 bg-text transition-transform duration-300 ${
-              menuOpen ? "-translate-y-[3.5px] -rotate-45" : ""
+            className={`h-0.5 w-6 bg-text transition-transform duration-300 ${
+              menuOpen ? "-translate-y-[4px] -rotate-45" : ""
             }`}
           />
         </button>
@@ -107,12 +123,21 @@ export default function Navbar() {
             {link.label}
           </a>
         ))}
+        <button
+          type="button"
+          onClick={toggleLanguage}
+          className="mt-2 flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-text-secondary"
+        >
+          <span className={language === "pt" ? "text-accent" : ""}>PT</span>
+          <span aria-hidden="true">/</span>
+          <span className={language === "en" ? "text-accent" : ""}>EN</span>
+        </button>
         <a
           href="#contact"
           onClick={() => setMenuOpen(false)}
-          className="mt-4 rounded-full border border-accent px-6 py-3 text-sm font-semibold uppercase tracking-widest text-accent"
+          className="mt-2 rounded-full border border-accent px-6 py-3 text-sm font-semibold uppercase tracking-widest text-accent"
         >
-          Let&apos;s talk →
+          {t.nav.cta}
         </a>
       </div>
     </header>

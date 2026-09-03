@@ -1,19 +1,21 @@
+"use client";
+
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+
 export default function About() {
+  const { t } = useLanguage();
+
   return (
     <section id="about" className="px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-4xl">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-          About EA Dev
+          {t.about.eyebrow}
         </p>
         <h2 className="text-[clamp(28px,4vw,48px)] font-semibold leading-snug tracking-tight text-text">
-          We don&apos;t just build websites. We build digital tools that help
-          businesses grow.
+          {t.about.heading}
         </h2>
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-text-secondary">
-          We work directly with businesses to understand what they actually
-          need, then design and build it — whether that&apos;s a simple
-          website or a full system with a database, an admin panel and
-          business logic behind it. No templates, no shortcuts.
+          {t.about.body}
         </p>
       </div>
     </section>

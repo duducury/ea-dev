@@ -3,14 +3,19 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
-
-const HEADLINE = "WE CRAFT DIGITAL PRODUCTS.";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import Hero3DVisual from "./Hero3DVisual";
 
 export default function Hero() {
+  const { t } = useLanguage();
   const rootRef = useRef<HTMLElement>(null);
   const wordsRef = useRef<HTMLSpanElement[]>([]);
   const revealRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    wordsRef.current = [];
+  }, [t.hero.headline]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -34,7 +39,7 @@ export default function Hero() {
     }, rootRef);
 
     return () => ctx.revert();
-  }, [reducedMotion]);
+  }, [reducedMotion, t.hero.headline]);
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -69,47 +74,52 @@ export default function Hero() {
         style={{ background: "var(--color-accent-glow)" }}
       />
 
-      <h1 className="max-w-6xl text-[clamp(56px,10vw,140px)] font-bold leading-[0.95] tracking-tight text-text">
-        {HEADLINE.split(" ").map((word, i) => (
-          <span key={word + i} className="text-reveal-word mr-4">
-            <span
-              ref={(el) => {
-                if (el) wordsRef.current[i] = el;
-              }}
-            >
-              {word}
-            </span>
-          </span>
-        ))}
-      </h1>
+      <div className="flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-center">
+        <div className="max-w-6xl">
+          <h1 className="text-[clamp(56px,10vw,140px)] font-bold uppercase leading-[0.95] tracking-tight text-text">
+            {t.hero.headline.split(" ").map((word, i) => (
+              <span key={word + i} className="text-reveal-word mr-4">
+                <span
+                  ref={(el) => {
+                    if (el) wordsRef.current[i] = el;
+                  }}
+                >
+                  {word}
+                </span>
+              </span>
+            ))}
+          </h1>
 
-      <div ref={revealRef} className="mt-8 max-w-xl">
-        <p className="text-[clamp(18px,2.5vw,28px)] text-text-secondary">
-          Websites, systems &amp; digital experiences built by Eduardo &amp;
-          Auler.
-        </p>
+          <div ref={revealRef} className="mt-8 max-w-xl">
+            <p className="text-[clamp(18px,2.5vw,28px)] text-text-secondary">
+              {t.hero.subtitle}
+            </p>
 
-        <div className="mt-10 flex flex-wrap items-center gap-4">
-          <a
-            href="#work"
-            data-cursor="link"
-            className="rounded-full bg-accent px-7 py-3.5 text-sm font-semibold uppercase tracking-widest text-black transition-transform hover:scale-105"
-          >
-            View our work
-          </a>
-          <a
-            href="#contact"
-            data-cursor="link"
-            className="rounded-full border border-border-strong px-7 py-3.5 text-sm font-semibold uppercase tracking-widest text-text transition-colors hover:border-accent hover:text-accent"
-          >
-            Let&apos;s work together
-          </a>
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <a
+                href="#work"
+                data-cursor="link"
+                className="rounded-full bg-accent px-7 py-3.5 text-sm font-semibold uppercase tracking-widest text-black transition-transform hover:scale-105"
+              >
+                {t.hero.ctaWork}
+              </a>
+              <a
+                href="#contact"
+                data-cursor="link"
+                className="rounded-full border border-border-strong px-7 py-3.5 text-sm font-semibold uppercase tracking-widest text-text transition-colors hover:border-accent hover:text-accent"
+              >
+                {t.hero.ctaContact}
+              </a>
+            </div>
+          </div>
         </div>
+
+        <Hero3DVisual />
       </div>
 
       <div className="absolute bottom-10 left-6 flex items-center gap-3 text-xs uppercase tracking-widest text-text-secondary md:left-10">
         <span className="h-8 w-px animate-pulse bg-border-strong" />
-        Scroll
+        {t.hero.scroll}
       </div>
     </section>
   );
