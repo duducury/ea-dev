@@ -89,7 +89,7 @@ export default function Hero() {
     <section
       id="top"
       ref={rootRef}
-      className="relative flex flex-col justify-center overflow-hidden px-6 pt-32 pb-16 sm:min-h-screen md:px-10"
+      className="relative flex flex-col justify-center overflow-hidden px-6 pt-24 pb-10 md:min-h-screen md:px-10"
     >
       <div className="flex flex-col items-start justify-between gap-10">
         <div className="max-w-3xl">
@@ -119,7 +119,7 @@ export default function Hero() {
                 {t.hero.subtitle}
               </p>
 
-              <div className="mt-10 flex flex-wrap items-center gap-4">
+              <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
                   href="#work"
                   data-cursor="link"
@@ -140,7 +140,7 @@ export default function Hero() {
 
           <div
             aria-hidden="true"
-            className="pointer-events-none relative mt-10 w-full sm:absolute sm:mt-0 sm:w-[clamp(280px,82vw,1180px)] sm:-bottom-[4%] sm:-right-[4%]"
+            className="pointer-events-none relative mt-6 w-full sm:absolute sm:mt-0 sm:w-[clamp(280px,82vw,1180px)] sm:-bottom-[4%] sm:-right-[4%]"
             style={{ perspective: "1100px" }}
           >
             <div ref={photoFloatRef} className="relative" style={{ aspectRatio: "1536 / 1024" }}>

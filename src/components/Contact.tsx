@@ -19,7 +19,7 @@ export default function Contact() {
   const { t } = useLanguage();
 
   return (
-    <section id="contact" className="relative z-10 bg-bg px-6 py-28 md:px-10 md:py-40">
+    <section id="contact" className="relative z-10 bg-bg px-6 py-16 md:px-10 md:py-28">
       <div className="mx-auto max-w-4xl text-center">
         <h2 className="text-[clamp(36px,7vw,96px)] font-bold leading-[1.02] tracking-tight">
           {t.contact.title}
@@ -36,7 +36,7 @@ export default function Contact() {
           {t.contact.cta}
         </a>
 
-        <ul className="mt-16 flex flex-col flex-wrap items-center justify-center gap-5 text-sm uppercase tracking-widest text-text-secondary md:flex-row md:gap-8">
+        <ul className="mt-10 flex flex-col flex-wrap items-center justify-center gap-5 text-sm uppercase tracking-widest text-text-secondary md:mt-16 md:flex-row md:gap-8">
           {contacts.map(({ label, href, Icon }) => (
             <li key={href}>
               <a

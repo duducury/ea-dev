@@ -35,6 +35,10 @@ html {
   scroll-behavior: smooth;
 }
 
+section[id] {
+  scroll-margin-top: 88px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -197,4 +201,12 @@ body.cursor-none button {
   .ambient-glow {
     animation: none;
   }
+}
+
+.services-atmosphere {
+  background:
+    radial-gradient(circle at 80% 6%, rgba(74, 255, 145, 0.11), transparent 38%),
+    radial-gradient(circle at 10% 62%, rgba(74, 255, 145, 0.07), transparent 42%),
+    radial-gradient(circle at 55% 100%, rgba(74, 255, 145, 0.05), transparent 45%),
+    #050505;
 }

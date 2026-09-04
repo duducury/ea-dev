@@ -6,7 +6,7 @@ export default function About() {
   const { t } = useLanguage();
 
   return (
-    <section id="about" className="relative z-10 bg-bg px-6 py-28 md:px-10 md:py-40">
+    <section id="about" className="relative z-10 bg-bg px-6 py-16 md:px-10 md:py-28">
       <div className="mx-auto max-w-4xl">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
           {t.about.eyebrow}

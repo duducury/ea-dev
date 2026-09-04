@@ -100,16 +100,16 @@ export default function Developers() {
   const { t } = useLanguage();
 
   return (
-    <section id="developers" className="relative z-10 bg-bg px-6 py-28 md:px-10 md:py-40">
+    <section id="developers" className="relative z-10 bg-bg px-6 py-16 md:px-10 md:py-28">
       <div className="mx-auto max-w-7xl">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
           {t.developers.eyebrow}
         </p>
-        <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
+        <h2 className="max-w-3xl text-[clamp(32px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
           {t.developers.title}
         </h2>
 
-        <div className="mt-16 grid grid-cols-2 gap-3 sm:gap-6">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-6">
           {developers.map((dev) => (
             <DeveloperCard key={dev.name} dev={dev} />
           ))}

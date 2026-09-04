@@ -40,31 +40,31 @@ export default function Process() {
   }, [reducedMotion]);
 
   return (
-    <section className="relative z-10 bg-bg px-6 py-28 md:px-10 md:py-40">
+    <section className="relative z-10 bg-bg px-6 py-16 md:px-10 md:py-28">
       <div className="mx-auto max-w-5xl" ref={rootRef}>
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
           {t.process.eyebrow}
         </p>
-        <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
+        <h2 className="max-w-3xl text-[clamp(32px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
           {t.process.title}
         </h2>
 
-        <div className="mt-16 flex flex-col">
+        <div className="mt-8 flex flex-col md:mt-14">
           {t.process.steps.map((step, i) => {
             const Icon = icons[i];
             return (
               <div
                 key={step.number}
-                className="process-step flex flex-col gap-4 border-t border-border py-8 md:flex-row md:items-center md:gap-10"
+                className="process-step flex flex-col gap-2 border-t border-border py-4 md:flex-row md:items-center md:gap-10 md:py-7"
               >
-                <div className="flex items-center gap-4 md:w-56">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border-strong bg-surface">
-                    <Icon className="h-5 w-5 text-accent" strokeWidth={1.5} />
+                <div className="flex items-center gap-3 md:w-56 md:gap-4">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border-strong bg-surface md:h-11 md:w-11">
+                    <Icon className="h-4 w-4 text-accent md:h-5 md:w-5" strokeWidth={1.5} />
                   </div>
-                  <span className="font-mono text-sm text-accent">{step.number}</span>
-                  <h3 className="text-2xl font-semibold text-text">{step.title}</h3>
+                  <span className="font-mono text-xs text-accent md:text-sm">{step.number}</span>
+                  <h3 className="text-lg font-semibold text-text md:text-2xl">{step.title}</h3>
                 </div>
-                <p className="text-text-secondary">{step.description}</p>
+                <p className="text-sm text-text-secondary md:text-base">{step.description}</p>
               </div>
             );
           })}
