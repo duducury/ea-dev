@@ -109,7 +109,7 @@ export default function Services() {
         </div>
       </section>
 
-      <div aria-hidden="true" className="services-atmosphere sticky top-0 z-0 min-h-[18vh]" />
+      <div aria-hidden="true" className="services-atmosphere sticky top-0 z-0 min-h-[100vh]" />
     </>
   );
 }
