@@ -53,7 +53,7 @@ export default function Services() {
       <section
         id="services"
         ref={rootRef}
-        className="services-atmosphere relative z-0 px-6 py-16 md:px-10 md:py-24"
+        className="services-atmosphere relative z-0 px-6 pb-10 pt-12 md:px-10 md:pb-16 md:pt-20"
       >
         <div className="mx-auto w-full max-w-7xl">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
@@ -66,7 +66,7 @@ export default function Services() {
             {t.services.subtitle}
           </p>
 
-          <div className="mt-8 grid grid-cols-2 gap-3.5 md:mt-12 md:grid-cols-4 md:gap-5">
+          <div className="mt-6 grid grid-cols-2 gap-3.5 md:mt-10 md:grid-cols-4 md:gap-5">
             {t.services.items.map((service, i) => {
               const image = cardImages[i];
               return (
@@ -109,7 +109,7 @@ export default function Services() {
         </div>
       </section>
 
-      <div aria-hidden="true" className="services-atmosphere sticky top-0 z-0 min-h-[55vh]" />
+      <div aria-hidden="true" className="services-atmosphere sticky top-0 z-0 min-h-[18vh]" />
     </>
   );
 }

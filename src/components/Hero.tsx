@@ -171,9 +171,11 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-6 flex items-center gap-3 text-xs uppercase tracking-widest text-text-secondary md:left-10">
+      <div
+        aria-hidden="true"
+        className="absolute bottom-10 left-6 flex items-center gap-3 md:left-10"
+      >
         <span className="h-8 w-px animate-pulse bg-border-strong" />
-        {t.hero.scroll}
       </div>
     </section>
   );

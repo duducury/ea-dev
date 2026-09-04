@@ -18,15 +18,30 @@ const geistMono = Geist_Mono({
 
 const siteUrl = "https://eadev.com"; // TODO: replace with the real production domain
 
+const ogImage = {
+  url: "/og-image.png",
+  width: 1200,
+  height: 630,
+  alt: "EA Dev",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "EA Dev — Sites & Sistemas Digitais",
   description:
     "EA Dev é um estúdio de desenvolvimento criado por Eduardo e Auler. Criamos sites, sistemas web e soluções digitais sob medida para empresas.",
   openGraph: {
+    type: "website",
+    url: siteUrl,
     title: "EA Dev — Sites & Sistemas Digitais",
     description: "Sites, sistemas e experiências digitais construídos por Eduardo & Auler.",
-    images: ["/og-image.png"],
+    images: [ogImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "EA Dev — Sites & Sistemas Digitais",
+    description: "Sites, sistemas e experiências digitais construídos por Eduardo & Auler.",
+    images: [ogImage.url],
   },
 };
 

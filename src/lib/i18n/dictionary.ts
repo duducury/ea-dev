@@ -69,7 +69,7 @@ export const dictionary: Record<Language, Dictionary> = {
       headline: "Desenvolvemos de acordo com a sua necessidade.",
       subtitle: "Sites, sistemas e experiências digitais construídos por Eduardo & Auler.",
       ctaWork: "Ver nosso trabalho",
-      ctaContact: "Vamos trabalhar juntos",
+      ctaContact: "Fale Com A Gente",
       scroll: "Rolar",
     },
     services: {
@@ -99,7 +99,7 @@ export const dictionary: Record<Language, Dictionary> = {
     },
     portfolio: {
       eyebrow: "Portfólio",
-      title: "Confira alguns de nossos trabalhos",
+      title: "Projetos que transformam ideias em experiências digitais.",
       visit: "Visitar projeto →",
       featured: "Projeto em destaque",
     },
@@ -174,7 +174,7 @@ export const dictionary: Record<Language, Dictionary> = {
     },
     portfolio: {
       eyebrow: "Portfolio",
-      title: "Selected Work",
+      title: "Projects that turn ideas into digital experiences.",
       visit: "Visit Project →",
       featured: "Featured project",
     },

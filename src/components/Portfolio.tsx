@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { gsap } from "@/lib/gsap";
@@ -113,61 +113,103 @@ function ProjectCard({ project }: { project: Project }) {
 export default function Portfolio() {
   const { t } = useLanguage();
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const getCardStep = () => {
+    const el = scrollerRef.current;
+    if (!el) return 0;
+    const card = el.querySelector("article");
+    return card ? card.getBoundingClientRect().width + 24 : el.clientWidth * 0.8;
+  };
 
   const scrollByCard = (direction: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
-    const card = el.querySelector("article");
-    const amount = card ? card.getBoundingClientRect().width + 24 : el.clientWidth * 0.8;
-    el.scrollBy({ left: direction * amount, behavior: "smooth" });
+    el.scrollBy({ left: direction * getCardStep(), behavior: "smooth" });
   };
+
+  const scrollToIndex = (index: number) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollTo({ left: index * getCardStep(), behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    const handleScroll = () => {
+      const step = getCardStep();
+      if (!step) return;
+      const index = Math.round(el.scrollLeft / step);
+      setActiveIndex(Math.min(projects.length - 1, Math.max(0, index)));
+    };
+
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section
       id="work"
       className="sticky top-0 z-10 min-h-[140vh] bg-white text-black"
     >
-      <div className="mx-auto w-full max-w-7xl px-6 pt-20 md:px-10 md:pt-24">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-              {t.portfolio.eyebrow}
-            </p>
-            <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight text-black">
-              {t.portfolio.title}
-            </h2>
-          </div>
-
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => scrollByCard(-1)}
-              aria-label="Previous project"
-              data-cursor="link"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-black/15 text-black transition-colors hover:border-accent hover:text-accent"
-            >
-              <ChevronLeft className="h-5 w-5" strokeWidth={1.75} />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollByCard(1)}
-              aria-label="Next project"
-              data-cursor="link"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-black/15 text-black transition-colors hover:border-accent hover:text-accent"
-            >
-              <ChevronRight className="h-5 w-5" strokeWidth={1.75} />
-            </button>
-          </div>
+      <div className="mx-auto w-full max-w-7xl px-6 pt-16 md:px-10 md:pt-20">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-black/70">
+            {t.portfolio.eyebrow}
+          </p>
         </div>
+        <h2 className="max-w-3xl text-[clamp(28px,4.5vw,56px)] font-bold leading-[1.08] tracking-tight text-black">
+          {t.portfolio.title}
+        </h2>
       </div>
 
       <div
         ref={scrollerRef}
-        className="no-scrollbar mt-16 flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-4 md:px-10"
+        className="no-scrollbar mx-auto mt-6 flex w-full max-w-7xl scroll-pl-6 gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-2 md:mt-9 md:scroll-pl-10 md:px-10"
       >
         {projects.map((project) => (
           <ProjectCard key={project.slug} project={project} />
         ))}
+      </div>
+
+      <div className="mx-auto mt-4 flex w-full max-w-7xl items-center justify-center gap-6 px-6 md:px-10">
+        <button
+          type="button"
+          onClick={() => scrollByCard(-1)}
+          aria-label="Previous project"
+          data-cursor="link"
+          className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/15 text-black transition-colors hover:border-accent hover:text-accent md:flex"
+        >
+          <ChevronLeft className="h-5 w-5" strokeWidth={1.75} />
+        </button>
+
+        <div className="flex items-center gap-2">
+          {projects.map((project, i) => (
+            <button
+              key={project.slug}
+              type="button"
+              onClick={() => scrollToIndex(i)}
+              aria-label={`${t.portfolio.visit} ${project.name}`}
+              aria-current={i === activeIndex}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === activeIndex ? "w-6 bg-accent" : "w-2 bg-black/20 hover:bg-black/35"
+              }`}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => scrollByCard(1)}
+          aria-label="Next project"
+          data-cursor="link"
+          className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/15 text-black transition-colors hover:border-accent hover:text-accent md:flex"
+        >
+          <ChevronRight className="h-5 w-5" strokeWidth={1.75} />
+        </button>
       </div>
     </section>
   );
