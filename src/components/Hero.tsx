@@ -12,6 +12,7 @@ export default function Hero() {
   const wordsRef = useRef<HTMLSpanElement[]>([]);
   const revealRef = useRef<HTMLDivElement>(null);
   const photoTiltRef = useRef<HTMLDivElement>(null);
+  const photoFloatRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
@@ -43,9 +44,24 @@ export default function Hero() {
   }, [reducedMotion, t.hero.headline]);
 
   useEffect(() => {
+    if (reducedMotion || !photoFloatRef.current) return;
+
+    const idle = gsap.to(photoFloatRef.current, {
+      y: -14,
+      duration: 4.5,
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+    });
+
+    return () => {
+      idle.kill();
+    };
+  }, [reducedMotion]);
+
+  useEffect(() => {
     if (reducedMotion) return;
-    const el = rootRef.current;
-    if (!el || window.matchMedia("(hover: none)").matches) return;
+    if (window.matchMedia("(hover: none)").matches) return;
 
     const tiltX = gsap.quickTo(photoTiltRef.current, "rotateX", {
       duration: 0.8,
@@ -61,15 +77,8 @@ export default function Hero() {
       const px = e.clientX / innerWidth - 0.5;
       const py = e.clientY / innerHeight - 0.5;
 
-      gsap.to(el.querySelector(".hero-parallax"), {
-        x: px * 12,
-        y: py * 12,
-        duration: 0.8,
-        ease: "power2.out",
-      });
-
-      tiltY(px * 10);
-      tiltX(-py * 10);
+      tiltY(px * 18);
+      tiltX(-py * 18);
     };
 
     window.addEventListener("mousemove", handleMove);
@@ -85,13 +94,12 @@ export default function Hero() {
       <div
         aria-hidden="true"
         className="pointer-events-none absolute bottom-0 right-0 hidden lg:block"
-        style={{ width: "min(46vw, 700px)", perspective: "1600px" }}
+        style={{ width: "min(62vw, 980px)", perspective: "1100px" }}
       >
-        <div className="relative" style={{ aspectRatio: "1536 / 1024" }}>
+        <div ref={photoFloatRef} className="relative" style={{ aspectRatio: "1536 / 1024" }}>
           <div
             aria-hidden="true"
-            className="hero-parallax ambient-glow absolute right-[10%] top-[-6%] h-40 w-40 rounded-full opacity-60 blur-3xl"
-            style={{ background: "var(--color-accent-glow)" }}
+            className="ambient-glow absolute right-[8%] top-[-10%] h-64 w-64 rounded-full opacity-90 blur-2xl"
           />
 
           <div
@@ -103,11 +111,11 @@ export default function Hero() {
               src="/fundo.png"
               alt=""
               fill
-              sizes="46vw"
+              sizes="62vw"
               className="object-contain object-bottom"
               style={{
-                maskImage: "linear-gradient(to right, transparent, black 22%)",
-                WebkitMaskImage: "linear-gradient(to right, transparent, black 22%)",
+                maskImage: "linear-gradient(to right, transparent, black 32%)",
+                WebkitMaskImage: "linear-gradient(to right, transparent, black 32%)",
               }}
             />
           </div>
