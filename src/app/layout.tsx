@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import CustomCursor from "@/components/CustomCursor";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const siteUrl = "https://eadev.com"; // TODO: replace with the real production domain
+const siteUrl = "https://ea-dev-ten.vercel.app";
 
 const ogImage = {
   url: "/og-image.png",
@@ -30,6 +30,11 @@ export const metadata: Metadata = {
   title: "EA Dev — Sites & Sistemas Digitais",
   description:
     "EA Dev é um estúdio de desenvolvimento criado por Eduardo e Auler. Criamos sites, sistemas web e soluções digitais sob medida para empresas.",
+  applicationName: "EA Dev",
+  appleWebApp: {
+    title: "EA Dev",
+    statusBarStyle: "black-translucent",
+  },
   openGraph: {
     type: "website",
     url: siteUrl,
@@ -43,6 +48,10 @@ export const metadata: Metadata = {
     description: "Sites, sistemas e experiências digitais construídos por Eduardo & Auler.",
     images: [ogImage.url],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
