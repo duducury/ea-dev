@@ -76,7 +76,13 @@ export default function Hero() {
 
       <div className="flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-center">
         <div className="max-w-6xl">
-          <h1 className="text-[clamp(56px,10vw,140px)] font-bold uppercase leading-[0.95] tracking-tight text-text">
+          <h1
+            className={`font-bold uppercase leading-[0.95] tracking-tight text-text ${
+              t.hero.headline.length > 30
+                ? "text-[clamp(30px,7.5vw,88px)]"
+                : "text-[clamp(56px,10vw,140px)]"
+            }`}
+          >
             {t.hero.headline.split(" ").map((word, i) => (
               <span key={word + i} className="text-reveal-word mr-4">
                 <span

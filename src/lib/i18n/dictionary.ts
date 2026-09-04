@@ -65,7 +65,7 @@ export const dictionary: Record<Language, Dictionary> = {
       cta: "Vamos conversar →",
     },
     hero: {
-      headline: "Criamos produtos digitais.",
+      headline: "Desenvolvemos de acordo com a sua necessidade.",
       subtitle: "Sites, sistemas e experiências digitais construídos por Eduardo & Auler.",
       ctaWork: "Ver nosso trabalho",
       ctaContact: "Vamos trabalhar juntos",
