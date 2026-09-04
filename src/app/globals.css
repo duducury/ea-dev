@@ -210,3 +210,21 @@ body.cursor-none button {
     radial-gradient(circle at 55% 100%, rgba(74, 255, 145, 0.04), transparent 45%),
     #030303;
 }
+
+/* On very short viewports (e.g. iPhone SE), tighten Services so its content
+   still fits within the sticky pin's single-viewport crop. */
+@media (max-height: 720px) {
+  #services {
+    padding-top: 5.5rem;
+    padding-bottom: 0.25rem;
+  }
+  #services .services-subtitle {
+    margin-top: 0.375rem;
+  }
+  #services .services-grid {
+    margin-top: 0.75rem;
+  }
+  #services .service-card-image {
+    height: 52px;
+  }
+}
