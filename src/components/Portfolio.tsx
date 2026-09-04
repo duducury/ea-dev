@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { projects, type Project } from "@/data/projects";
@@ -112,7 +112,9 @@ function ProjectCard({ project }: { project: Project }) {
 
 export default function Portfolio() {
   const { t } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   const scrollByCard = (direction: 1 | -1) => {
     const el = scrollerRef.current;
@@ -122,8 +124,41 @@ export default function Portfolio() {
     el.scrollBy({ left: direction * amount, behavior: "smooth" });
   };
 
+  useEffect(() => {
+    if (reducedMotion || !sectionRef.current) return;
+
+    const trigger = ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: true,
+      onUpdate: (self) => {
+        const p = self.progress;
+        const rampIn = Math.min(p / 0.2, 1);
+        const rampOut = Math.min((1 - p) / 0.2, 1);
+        const t = Math.min(rampIn, rampOut);
+        const light = Math.round(255 * t);
+        const dark = 255 - light;
+        document.documentElement.style.setProperty(
+          "--color-bg",
+          `rgb(${light} ${light} ${light})`
+        );
+        document.documentElement.style.setProperty(
+          "--color-text",
+          `rgb(${dark} ${dark} ${dark})`
+        );
+      },
+    });
+
+    return () => {
+      trigger.kill();
+      document.documentElement.style.removeProperty("--color-bg");
+      document.documentElement.style.removeProperty("--color-text");
+    };
+  }, [reducedMotion]);
+
   return (
-    <section id="work" className="py-28 md:py-40">
+    <section id="work" ref={sectionRef} className="py-28 md:py-40">
       <div className="mx-auto max-w-7xl px-6 md:px-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
