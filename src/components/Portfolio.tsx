@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { Sparkles } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -36,7 +36,7 @@ function ProjectCard({ project }: { project: Project }) {
 
   const handleEnter = () => {
     if (reducedMotion) return;
-    gsap.to(previewRef.current, { scale: 1.04, duration: 0.5, ease: "power2.out" });
+    gsap.to(previewRef.current, { scale: 1.05, duration: 0.5, ease: "power2.out" });
   };
 
   const handleLeave = () => {
@@ -47,12 +47,12 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <article
       ref={cardRef}
-      className="flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-surface transition-colors duration-300 hover:border-accent/50"
+      className="flex w-[78%] shrink-0 snap-start flex-col sm:w-[48%] md:w-[36%] lg:w-[27%]"
     >
       <div
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
-        className="aspect-[4/3] overflow-hidden border-b border-border"
+        className="relative aspect-square overflow-hidden rounded-3xl border border-border bg-surface transition-colors duration-300 hover:border-accent/50"
       >
         <a
           href={project.url}
@@ -69,55 +69,30 @@ function ProjectCard({ project }: { project: Project }) {
                   src={project.screenshot}
                   alt={`${project.name} homepage`}
                   fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
+                  sizes="(min-width: 1024px) 27vw, (min-width: 640px) 48vw, 78vw"
                   className="object-cover object-top"
                 />
               </div>
             </ProjectPreview>
           </div>
         </a>
-      </div>
 
-      <div className="flex flex-1 flex-col p-6 md:p-8">
         {project.featured && (
-          <div className="mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-accent/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-accent">
+          <div className="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-accent backdrop-blur-sm">
             <Sparkles className="h-3 w-3" strokeWidth={1.75} />
             {t.portfolio.featured}
           </div>
         )}
+      </div>
 
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-          {project.category[language]}
-        </p>
-        <h3 className="mt-3 text-2xl font-bold leading-tight tracking-tight">
-          {project.name}
-        </h3>
-        <p className="mt-3 text-sm text-text-secondary">
-          {project.description[language]}
-        </p>
-
-        {project.badges && (
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {project.badges[language].map((badge) => (
-              <span
-                key={badge}
-                className="rounded-full border border-accent/30 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-accent"
-              >
-                {badge}
-              </span>
-            ))}
-          </div>
-        )}
-
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {project.technologies.map((tech) => (
-            <span
-              key={tech}
-              className="rounded-full border border-border-strong px-2.5 py-1 text-[10px] uppercase tracking-wider text-text-secondary"
-            >
-              {tech}
-            </span>
-          ))}
+      <div className="mt-4 flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="truncate text-[10px] font-semibold uppercase tracking-[0.25em] text-accent">
+            {project.category[language]}
+          </p>
+          <h3 className="mt-1 truncate text-lg font-bold tracking-tight">
+            {project.name}
+          </h3>
         </div>
 
         <a
@@ -125,9 +100,10 @@ function ProjectCard({ project }: { project: Project }) {
           target="_blank"
           rel="noopener noreferrer"
           data-cursor="link"
-          className="mt-6 inline-block text-sm font-semibold uppercase tracking-widest text-text transition-colors hover:text-accent"
+          aria-label={`${t.portfolio.visit} ${project.name}`}
+          className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border-strong text-text transition-colors hover:border-accent hover:text-accent"
         >
-          {t.portfolio.visit}
+          <ArrowUpRight className="h-4 w-4" strokeWidth={1.75} />
         </a>
       </div>
     </article>
@@ -136,22 +112,59 @@ function ProjectCard({ project }: { project: Project }) {
 
 export default function Portfolio() {
   const { t } = useLanguage();
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  const scrollByCard = (direction: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const card = el.querySelector("article");
+    const amount = card ? card.getBoundingClientRect().width + 24 : el.clientWidth * 0.8;
+    el.scrollBy({ left: direction * amount, behavior: "smooth" });
+  };
 
   return (
-    <section id="work" className="px-6 py-28 md:px-10 md:py-40">
-      <div className="mx-auto max-w-7xl">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-          {t.portfolio.eyebrow}
-        </p>
-        <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
-          {t.portfolio.title}
-        </h2>
+    <section id="work" className="py-28 md:py-40">
+      <div className="mx-auto max-w-7xl px-6 md:px-10">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
+              {t.portfolio.eyebrow}
+            </p>
+            <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
+              {t.portfolio.title}
+            </h2>
+          </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => scrollByCard(-1)}
+              aria-label="Previous project"
+              data-cursor="link"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-text transition-colors hover:border-accent hover:text-accent"
+            >
+              <ChevronLeft className="h-5 w-5" strokeWidth={1.75} />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByCard(1)}
+              aria-label="Next project"
+              data-cursor="link"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-text transition-colors hover:border-accent hover:text-accent"
+            >
+              <ChevronRight className="h-5 w-5" strokeWidth={1.75} />
+            </button>
+          </div>
         </div>
+      </div>
+
+      <div
+        ref={scrollerRef}
+        className="no-scrollbar mt-16 flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-4 md:px-10"
+      >
+        {projects.map((project) => (
+          <ProjectCard key={project.slug} project={project} />
+        ))}
       </div>
     </section>
   );

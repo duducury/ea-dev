@@ -157,6 +157,15 @@ body.cursor-none button {
   will-change: transform;
 }
 
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Slowly cycling LED-style light, to keep the hero feeling alive */
 @property --glow-hue {
   syntax: "<number>";
