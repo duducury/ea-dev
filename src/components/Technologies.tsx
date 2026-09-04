@@ -26,7 +26,7 @@ export default function Technologies() {
   return (
     <section
       aria-label="Technologies"
-      className="border-y border-border py-20"
+      className="relative z-10 border-y border-border bg-bg py-20"
     >
       <div className="flex flex-col gap-6">
         <Row />

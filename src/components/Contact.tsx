@@ -19,7 +19,7 @@ export default function Contact() {
   const { t } = useLanguage();
 
   return (
-    <section id="contact" className="px-6 py-28 md:px-10 md:py-40">
+    <section id="contact" className="relative z-10 bg-bg px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-4xl text-center">
         <h2 className="text-[clamp(36px,7vw,96px)] font-bold leading-[1.02] tracking-tight">
           {t.contact.title}

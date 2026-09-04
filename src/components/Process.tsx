@@ -40,7 +40,7 @@ export default function Process() {
   }, [reducedMotion]);
 
   return (
-    <section className="px-6 py-28 md:px-10 md:py-40">
+    <section className="relative z-10 bg-bg px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-5xl" ref={rootRef}>
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
           {t.process.eyebrow}

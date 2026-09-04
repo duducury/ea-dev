@@ -125,9 +125,9 @@ export default function Portfolio() {
   return (
     <section
       id="work"
-      className="relative z-10 bg-white py-28 text-black md:py-40"
+      className="sticky top-0 z-10 flex min-h-[170vh] flex-col justify-center bg-white text-black"
     >
-      <div className="mx-auto max-w-7xl px-6 md:px-10">
+      <div className="mx-auto w-full max-w-7xl px-6 py-16 md:px-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">

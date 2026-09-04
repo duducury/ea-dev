@@ -100,7 +100,7 @@ export default function Developers() {
   const { t } = useLanguage();
 
   return (
-    <section id="developers" className="px-6 py-28 md:px-10 md:py-40">
+    <section id="developers" className="relative z-10 bg-bg px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-7xl">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
           {t.developers.eyebrow}
