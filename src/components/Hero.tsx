@@ -11,6 +11,7 @@ export default function Hero() {
   const rootRef = useRef<HTMLElement>(null);
   const wordsRef = useRef<HTMLSpanElement[]>([]);
   const revealRef = useRef<HTMLDivElement>(null);
+  const photoTiltRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
@@ -46,16 +47,29 @@ export default function Hero() {
     const el = rootRef.current;
     if (!el || window.matchMedia("(hover: none)").matches) return;
 
+    const tiltX = gsap.quickTo(photoTiltRef.current, "rotateX", {
+      duration: 0.8,
+      ease: "power2.out",
+    });
+    const tiltY = gsap.quickTo(photoTiltRef.current, "rotateY", {
+      duration: 0.8,
+      ease: "power2.out",
+    });
+
     const handleMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth - 0.5) * 12;
-      const y = (e.clientY / innerHeight - 0.5) * 12;
+      const px = e.clientX / innerWidth - 0.5;
+      const py = e.clientY / innerHeight - 0.5;
+
       gsap.to(el.querySelector(".hero-parallax"), {
-        x,
-        y,
+        x: px * 12,
+        y: py * 12,
         duration: 0.8,
         ease: "power2.out",
       });
+
+      tiltY(px * 10);
+      tiltX(-py * 10);
     };
 
     window.addEventListener("mousemove", handleMove);
@@ -70,25 +84,34 @@ export default function Hero() {
     >
       <div
         aria-hidden="true"
-        className="hero-parallax ambient-glow pointer-events-none absolute -right-40 top-1/4 h-[420px] w-[420px] rounded-full blur-3xl"
-        style={{ background: "var(--color-accent-glow)" }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[58%] lg:block"
-        style={{
-          maskImage: "linear-gradient(to right, transparent, black 30%)",
-          WebkitMaskImage: "linear-gradient(to right, transparent, black 30%)",
-        }}
+        className="pointer-events-none absolute bottom-0 right-0 hidden lg:block"
+        style={{ width: "min(46vw, 700px)", perspective: "1600px" }}
       >
-        <Image
-          src="/fundo.png"
-          alt=""
-          fill
-          sizes="58vw"
-          className="object-cover object-right"
-        />
+        <div className="relative" style={{ aspectRatio: "1536 / 1024" }}>
+          <div
+            aria-hidden="true"
+            className="hero-parallax ambient-glow absolute right-[10%] top-[-6%] h-40 w-40 rounded-full opacity-60 blur-3xl"
+            style={{ background: "var(--color-accent-glow)" }}
+          />
+
+          <div
+            ref={photoTiltRef}
+            className="relative h-full w-full"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            <Image
+              src="/fundo.png"
+              alt=""
+              fill
+              sizes="46vw"
+              className="object-contain object-bottom"
+              style={{
+                maskImage: "linear-gradient(to right, transparent, black 22%)",
+                WebkitMaskImage: "linear-gradient(to right, transparent, black 22%)",
+              }}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="relative z-10 flex flex-col items-start justify-between gap-10">
