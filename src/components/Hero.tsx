@@ -93,13 +93,13 @@ export default function Hero() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 right-0 hidden lg:block"
-        style={{ width: "min(62vw, 980px)", perspective: "1100px" }}
+        className="pointer-events-none absolute -bottom-[4%] -right-[4%]"
+        style={{ width: "clamp(280px, 82vw, 1180px)", perspective: "1100px" }}
       >
         <div ref={photoFloatRef} className="relative" style={{ aspectRatio: "1536 / 1024" }}>
           <div
             aria-hidden="true"
-            className="ambient-glow absolute right-[8%] top-[-10%] h-64 w-64 rounded-full opacity-90 blur-2xl"
+            className="ambient-glow absolute right-[8%] top-[-10%] aspect-square w-[32%] rounded-full opacity-90 blur-2xl"
           />
 
           <div
@@ -111,11 +111,11 @@ export default function Hero() {
               src="/fundo.png"
               alt=""
               fill
-              sizes="62vw"
+              sizes="(min-width: 1024px) 62vw, 82vw"
               className="object-contain object-bottom"
               style={{
-                maskImage: "linear-gradient(to right, transparent, black 32%)",
-                WebkitMaskImage: "linear-gradient(to right, transparent, black 32%)",
+                maskImage: "linear-gradient(to right, transparent, black 30%)",
+                WebkitMaskImage: "linear-gradient(to right, transparent, black 30%)",
               }}
             />
           </div>
