@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { projects, type Project } from "@/data/projects";
@@ -101,7 +101,7 @@ function ProjectCard({ project }: { project: Project }) {
           rel="noopener noreferrer"
           data-cursor="link"
           aria-label={`${t.portfolio.visit} ${project.name}`}
-          className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border-strong text-text transition-colors hover:border-accent hover:text-accent"
+          className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-black/15 text-black transition-colors hover:border-accent hover:text-accent"
         >
           <ArrowUpRight className="h-4 w-4" strokeWidth={1.75} />
         </a>
@@ -112,9 +112,7 @@ function ProjectCard({ project }: { project: Project }) {
 
 export default function Portfolio() {
   const { t } = useLanguage();
-  const sectionRef = useRef<HTMLElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const reducedMotion = usePrefersReducedMotion();
 
   const scrollByCard = (direction: 1 | -1) => {
     const el = scrollerRef.current;
@@ -124,48 +122,18 @@ export default function Portfolio() {
     el.scrollBy({ left: direction * amount, behavior: "smooth" });
   };
 
-  useEffect(() => {
-    if (reducedMotion || !sectionRef.current) return;
-
-    const trigger = ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: true,
-      onUpdate: (self) => {
-        const p = self.progress;
-        const rampIn = Math.min(p / 0.2, 1);
-        const rampOut = Math.min((1 - p) / 0.2, 1);
-        const t = Math.min(rampIn, rampOut);
-        const light = Math.round(255 * t);
-        const dark = 255 - light;
-        document.documentElement.style.setProperty(
-          "--color-bg",
-          `rgb(${light} ${light} ${light})`
-        );
-        document.documentElement.style.setProperty(
-          "--color-text",
-          `rgb(${dark} ${dark} ${dark})`
-        );
-      },
-    });
-
-    return () => {
-      trigger.kill();
-      document.documentElement.style.removeProperty("--color-bg");
-      document.documentElement.style.removeProperty("--color-text");
-    };
-  }, [reducedMotion]);
-
   return (
-    <section id="work" ref={sectionRef} className="py-28 md:py-40">
+    <section
+      id="work"
+      className="relative z-10 bg-white py-28 text-black md:py-40"
+    >
       <div className="mx-auto max-w-7xl px-6 md:px-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
               {t.portfolio.eyebrow}
             </p>
-            <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
+            <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight text-black">
               {t.portfolio.title}
             </h2>
           </div>
@@ -176,7 +144,7 @@ export default function Portfolio() {
               onClick={() => scrollByCard(-1)}
               aria-label="Previous project"
               data-cursor="link"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-text transition-colors hover:border-accent hover:text-accent"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-black/15 text-black transition-colors hover:border-accent hover:text-accent"
             >
               <ChevronLeft className="h-5 w-5" strokeWidth={1.75} />
             </button>
@@ -185,7 +153,7 @@ export default function Portfolio() {
               onClick={() => scrollByCard(1)}
               aria-label="Next project"
               data-cursor="link"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-text transition-colors hover:border-accent hover:text-accent"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-black/15 text-black transition-colors hover:border-accent hover:text-accent"
             >
               <ChevronRight className="h-5 w-5" strokeWidth={1.75} />
             </button>

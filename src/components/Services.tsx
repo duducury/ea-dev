@@ -63,7 +63,11 @@ export default function Services() {
   };
 
   return (
-    <section id="services" ref={rootRef} className="px-6 py-28 md:px-10 md:py-40">
+    <section
+      id="services"
+      ref={rootRef}
+      className="sticky top-0 z-0 bg-bg px-6 py-28 md:px-10 md:py-40"
+    >
       <div className="mx-auto max-w-7xl">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
           {t.services.eyebrow}
