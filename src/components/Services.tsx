@@ -66,17 +66,17 @@ export default function Services() {
     <section
       id="services"
       ref={rootRef}
-      className="sticky top-0 min-h-[170vh] bg-bg px-6 md:px-10"
+      className="sticky top-0 min-h-[230vh] bg-bg px-6 md:px-10"
     >
-      <div className="mx-auto w-full max-w-7xl pb-16 pt-32 md:pt-40">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
+      <div className="mx-auto w-full max-w-7xl pb-16 pt-28 md:pt-32">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
           {t.services.eyebrow}
         </p>
-        <h2 className="max-w-3xl text-[clamp(36px,6vw,80px)] font-bold leading-[1.02] tracking-tight">
+        <h2 className="max-w-3xl text-[clamp(26px,4.2vw,56px)] font-bold leading-[1.05] tracking-tight">
           {t.services.title}
         </h2>
 
-        <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div className="mt-8 grid grid-cols-2 gap-3 md:mt-10 md:grid-cols-4 md:gap-5">
           {t.services.items.map((service, i) => {
             const Icon = icons[i];
             return (
@@ -84,15 +84,17 @@ export default function Services() {
                 key={service.title}
                 onMouseEnter={handleEnter}
                 onMouseLeave={handleLeave}
-                className="service-card rounded-2xl border border-border bg-surface p-8 md:p-10"
+                className="service-card rounded-2xl border border-border bg-surface p-4 md:p-6"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-border-strong bg-black">
-                  <Icon className="h-6 w-6 text-accent" strokeWidth={1.5} />
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-border-strong bg-black md:h-11 md:w-11">
+                  <Icon className="h-4 w-4 text-accent md:h-5 md:w-5" strokeWidth={1.5} />
                 </div>
-                <h3 className="mt-6 text-2xl font-semibold text-text">
+                <h3 className="mt-3 text-sm font-semibold text-text md:mt-4 md:text-lg">
                   {service.title}
                 </h3>
-                <p className="mt-3 text-text-secondary">{service.description}</p>
+                <p className="mt-1.5 text-xs leading-snug text-text-secondary md:mt-2 md:text-sm">
+                  {service.description}
+                </p>
               </div>
             );
           })}
