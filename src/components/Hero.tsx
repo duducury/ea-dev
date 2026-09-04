@@ -70,7 +70,7 @@ export default function Hero() {
     >
       <div
         aria-hidden="true"
-        className="hero-parallax pointer-events-none absolute -right-40 top-1/4 h-[420px] w-[420px] rounded-full blur-3xl"
+        className="hero-parallax ambient-glow pointer-events-none absolute -right-40 top-1/4 h-[420px] w-[420px] rounded-full blur-3xl"
         style={{ background: "var(--color-accent-glow)" }}
       />
 

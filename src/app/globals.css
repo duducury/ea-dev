@@ -156,3 +156,24 @@ body.cursor-none button {
   display: inline-block;
   will-change: transform;
 }
+
+/* Slowly drifting ambient glow color, to keep the hero feeling alive */
+@keyframes ambient-glow-shift {
+  0%,
+  100% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(120deg);
+  }
+}
+
+.ambient-glow {
+  animation: ambient-glow-shift 26s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-glow {
+    animation: none;
+  }
+}
