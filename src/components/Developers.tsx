@@ -46,30 +46,29 @@ function DeveloperCard({ dev }: { dev: (typeof developers)[number] }) {
       onMouseLeave={handleLeave}
       className="group relative overflow-hidden rounded-3xl border border-border bg-surface p-8 transition-colors duration-300 hover:border-accent md:p-12"
     >
-      <div className="overflow-hidden rounded-2xl border border-border-strong">
-        <div ref={avatarRef} className="relative aspect-square w-full">
-          <Image
-            src={dev.photo}
-            alt={dev.name}
-            fill
-            sizes="(min-width: 768px) 40vw, 90vw"
-            className="object-cover"
-          />
-        </div>
+      <div
+        ref={avatarRef}
+        className="relative mx-auto h-40 w-40 overflow-hidden rounded-full border border-border-strong md:h-48 md:w-48"
+      >
+        <Image
+          src={dev.photo}
+          alt={dev.name}
+          fill
+          sizes="192px"
+          className="object-cover"
+        />
       </div>
 
-      <div className="mt-6 flex items-center justify-between">
-        <div>
-          <h3 className="text-2xl font-bold text-text">{dev.name}</h3>
-          <p className="text-sm uppercase tracking-widest text-text-secondary">
-            {dev.role[language]}
-          </p>
-        </div>
+      <div className="mt-6 text-center">
+        <h3 className="text-2xl font-bold text-text">{dev.name}</h3>
+        <p className="text-sm uppercase tracking-widest text-text-secondary">
+          {dev.role[language]}
+        </p>
       </div>
 
-      <p className="mt-4 text-text-secondary">{dev.bio[language]}</p>
+      <p className="mt-4 text-center text-text-secondary">{dev.bio[language]}</p>
 
-      <div className="mt-6 flex gap-5">
+      <div className="mt-6 flex justify-center gap-5">
         <a
           href={dev.github}
           target="_blank"
