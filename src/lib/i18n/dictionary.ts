@@ -19,6 +19,7 @@ export interface Dictionary {
   services: {
     eyebrow: string;
     title: string;
+    subtitle: string;
     items: { title: string; description: string }[];
   };
   portfolio: {
@@ -74,6 +75,7 @@ export const dictionary: Record<Language, Dictionary> = {
     services: {
       eyebrow: "O que construímos",
       title: "Quatro formas de transformar ideias em produtos.",
+      subtitle: "Soluções digitais modernas, feitas para o seu negócio crescer.",
       items: [
         {
           title: "Sites",
@@ -153,6 +155,7 @@ export const dictionary: Record<Language, Dictionary> = {
     services: {
       eyebrow: "What we build",
       title: "Four ways we turn ideas into products.",
+      subtitle: "Modern digital solutions, built to help your business grow.",
       items: [
         { title: "Websites", description: "Professional websites designed to represent your business." },
         {
