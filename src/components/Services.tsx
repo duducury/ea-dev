@@ -52,7 +52,7 @@ export default function Services() {
     <section
       id="services"
       ref={rootRef}
-      className="services-atmosphere sticky top-0 z-0 min-h-screen px-6 pb-6 pt-24 md:px-10 md:pb-16 md:pt-24"
+      className="services-atmosphere sticky top-0 z-0 min-h-[128vh] px-6 pb-6 pt-24 md:px-10 md:pb-16 md:pt-24"
     >
       <div className="mx-auto w-full max-w-7xl">
         <p className="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
