@@ -45,8 +45,7 @@ export default function Navbar() {
           data-cursor="link"
           className="flex items-center gap-2.5"
         >
-          <Image src="/logo-icon.png" alt="" width={1536} height={1024} className="h-11 w-auto" priority />
-          <span className="text-sm font-bold tracking-[0.2em] text-text">EA DEV</span>
+          <Image src="/logo-icon.png" alt="EA Dev" width={1904} height={826} className="h-11 w-auto" priority />
         </a>
 
         <ul className="hidden items-center gap-8 lg:flex">
