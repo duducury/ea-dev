@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Navbar() {
@@ -42,9 +43,10 @@ export default function Navbar() {
         <a
           href="#top"
           data-cursor="link"
-          className="text-sm font-bold tracking-[0.2em] text-text"
+          className="flex items-center gap-2.5"
         >
-          EA DEV
+          <Image src="/logo-icon.png" alt="" width={784} height={400} className="h-5 w-auto" priority />
+          <span className="text-sm font-bold tracking-[0.2em] text-text">EA DEV</span>
         </a>
 
         <ul className="hidden items-center gap-8 md:flex">

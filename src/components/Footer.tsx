@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Footer() {
@@ -15,11 +16,14 @@ export default function Footer() {
   return (
     <footer className="border-t border-border px-6 py-10 md:px-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 text-center md:flex-row md:justify-between md:text-left">
-        <div>
-          <p className="text-sm font-bold tracking-[0.2em] text-text">EA DEV</p>
-          <p className="mt-1 text-xs text-text-secondary">
-            {t.footer.builtBy} © {new Date().getFullYear()}
-          </p>
+        <div className="flex items-center gap-2.5">
+          <Image src="/logo-icon.png" alt="" width={784} height={400} className="h-4 w-auto" />
+          <div>
+            <p className="text-sm font-bold tracking-[0.2em] text-text">EA DEV</p>
+            <p className="mt-1 text-xs text-text-secondary">
+              {t.footer.builtBy} © {new Date().getFullYear()}
+            </p>
+          </div>
         </div>
 
         <ul className="flex flex-wrap items-center justify-center gap-6 text-xs uppercase tracking-widest text-text-secondary">

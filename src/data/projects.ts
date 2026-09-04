@@ -2,6 +2,7 @@ export interface Project {
   slug: string;
   name: string;
   url: string;
+  screenshot: string;
   technologies: string[];
   featured?: boolean;
   category: { pt: string; en: string };
@@ -13,6 +14,7 @@ export const projects: Project[] = [
   {
     slug: "favela-store",
     name: "Favela Store Catalog",
+    screenshot: "/favelastore.png",
     category: { pt: "Sistema Web", en: "Web System" },
     description: {
       pt: "Um sistema completo de catálogo digital e gestão de vendas construído para um negócio de varejo em crescimento. Não é só um site — é uma ferramenta de negócio real.",
@@ -30,6 +32,7 @@ export const projects: Project[] = [
   {
     slug: "united-flooring-america",
     name: "United Flooring America",
+    screenshot: "/flooring.png",
     category: { pt: "Site Institucional", en: "Business Website" },
     description: {
       pt: "Um site institucional profissional para uma empresa de pisos nos Estados Unidos.",
@@ -42,6 +45,7 @@ export const projects: Project[] = [
   {
     slug: "dois-amores",
     name: "Dois Amores",
+    screenshot: "/picole.png",
     category: { pt: "Site para Pequeno Negócio", en: "Small Business Website" },
     description: {
       pt: "Um site vitrine de produtos para um pequeno negócio de picolés gourmet.",

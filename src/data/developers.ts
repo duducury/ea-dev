@@ -1,6 +1,7 @@
 export interface Developer {
   name: string;
   initial: string;
+  photo: string;
   role: { pt: string; en: string };
   bio: { pt: string; en: string };
   github: string;
@@ -11,6 +12,7 @@ export const developers: Developer[] = [
   {
     name: "Eduardo",
     initial: "E",
+    photo: "/eduardo.png",
     role: { pt: "Desenvolvedor / Cofundador", en: "Developer / Co-Founder" },
     bio: {
       pt: "Focado em sistemas sólidos e escaláveis — do banco de dados até a interface.",
@@ -24,6 +26,7 @@ export const developers: Developer[] = [
   {
     name: "Auler",
     initial: "A",
+    photo: "/auler.png",
     role: { pt: "Desenvolvedor / Cofundador", en: "Developer / Co-Founder" },
     bio: {
       pt: "Focado em transformar ideias em produtos limpos e funcionais que as pessoas realmente gostam de usar.",

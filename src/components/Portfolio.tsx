@@ -1,28 +1,19 @@
 "use client";
 
-import { useEffect, useRef, type ComponentType } from "react";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { Sparkles } from "lucide-react";
 import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { projects, type Project } from "@/data/projects";
 import ProjectPreview from "./ProjectPreview";
-import FavelaStorePreview from "./previews/FavelaStorePreview";
-import UnitedFlooringPreview from "./previews/UnitedFlooringPreview";
-import DoisAmoresPreview from "./previews/DoisAmoresPreview";
-
-const previewsBySlug: Record<string, ComponentType> = {
-  "favela-store": FavelaStorePreview,
-  "united-flooring-america": UnitedFlooringPreview,
-  "dois-amores": DoisAmoresPreview,
-};
 
 function ProjectCard({ project }: { project: Project }) {
   const { t, language } = useLanguage();
   const cardRef = useRef<HTMLElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const PreviewBody = previewsBySlug[project.slug];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -73,7 +64,15 @@ function ProjectCard({ project }: { project: Project }) {
         >
           <div ref={previewRef} className="h-full w-full">
             <ProjectPreview url={project.url}>
-              <PreviewBody />
+              <div className="relative h-full w-full">
+                <Image
+                  src={project.screenshot}
+                  alt={`${project.name} homepage`}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover object-top"
+                />
+              </div>
             </ProjectPreview>
           </div>
         </a>

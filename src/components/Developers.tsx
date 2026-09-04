@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
 import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
@@ -46,12 +47,14 @@ function DeveloperCard({ dev }: { dev: (typeof developers)[number] }) {
       className="group relative overflow-hidden rounded-3xl border border-border bg-surface p-8 transition-colors duration-300 hover:border-accent md:p-12"
     >
       <div className="overflow-hidden rounded-2xl border border-border-strong">
-        {/* TODO: replace with a real photo of {dev.name} */}
-        <div
-          ref={avatarRef}
-          className="flex aspect-square w-full items-center justify-center bg-black text-8xl font-bold text-accent"
-        >
-          {dev.initial}
+        <div ref={avatarRef} className="relative aspect-square w-full">
+          <Image
+            src={dev.photo}
+            alt={dev.name}
+            fill
+            sizes="(min-width: 768px) 40vw, 90vw"
+            className="object-cover"
+          />
         </div>
       </div>
 

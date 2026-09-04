@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "EA Dev — Sites & Sistemas Digitais",
     description: "Sites, sistemas e experiências digitais construídos por Eduardo & Auler.",
-    images: ["/og-image.png"], // TODO: create a real og-image.png in /public
+    images: ["/og-image.png"],
   },
 };
 
