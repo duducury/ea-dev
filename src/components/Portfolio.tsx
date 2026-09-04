@@ -1,17 +1,20 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Building2, IceCreamCone, ShoppingBag, Sparkles, type LucideIcon } from "lucide-react";
+import { useEffect, useRef, type ComponentType } from "react";
+import { Sparkles } from "lucide-react";
 import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { projects, type Project } from "@/data/projects";
 import ProjectPreview from "./ProjectPreview";
+import FavelaStorePreview from "./previews/FavelaStorePreview";
+import UnitedFlooringPreview from "./previews/UnitedFlooringPreview";
+import DoisAmoresPreview from "./previews/DoisAmoresPreview";
 
-const projectIcons: Record<string, LucideIcon> = {
-  "favela-store": ShoppingBag,
-  "united-flooring-america": Building2,
-  "dois-amores": IceCreamCone,
+const previewsBySlug: Record<string, ComponentType> = {
+  "favela-store": FavelaStorePreview,
+  "united-flooring-america": UnitedFlooringPreview,
+  "dois-amores": DoisAmoresPreview,
 };
 
 function ProjectCard({ project }: { project: Project }) {
@@ -19,7 +22,7 @@ function ProjectCard({ project }: { project: Project }) {
   const cardRef = useRef<HTMLElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const Icon = projectIcons[project.slug] ?? ShoppingBag;
+  const PreviewBody = previewsBySlug[project.slug];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -69,7 +72,9 @@ function ProjectCard({ project }: { project: Project }) {
           className="block h-full w-full"
         >
           <div ref={previewRef} className="h-full w-full">
-            <ProjectPreview url={project.url} Icon={Icon} accent={project.featured} />
+            <ProjectPreview url={project.url}>
+              <PreviewBody />
+            </ProjectPreview>
           </div>
         </a>
       </div>
