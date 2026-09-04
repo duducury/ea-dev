@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
-import Hero3DVisual from "./Hero3DVisual";
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -74,8 +74,25 @@ export default function Hero() {
         style={{ background: "var(--color-accent-glow)" }}
       />
 
-      <div className="flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-center">
-        <div className="max-w-6xl">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[58%] lg:block"
+        style={{
+          maskImage: "linear-gradient(to right, transparent, black 30%)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 30%)",
+        }}
+      >
+        <Image
+          src="/fundo.png"
+          alt=""
+          fill
+          sizes="58vw"
+          className="object-cover object-right"
+        />
+      </div>
+
+      <div className="relative z-10 flex flex-col items-start justify-between gap-10">
+        <div className="max-w-3xl">
           <h1
             className={`font-bold uppercase leading-[0.95] tracking-tight text-text ${
               t.hero.headline.length > 30
@@ -119,8 +136,6 @@ export default function Hero() {
             </div>
           </div>
         </div>
-
-        <Hero3DVisual />
       </div>
 
       <div className="absolute bottom-10 left-6 flex items-center gap-3 text-xs uppercase tracking-widest text-text-secondary md:left-10">
