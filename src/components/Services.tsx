@@ -66,9 +66,9 @@ export default function Services() {
     <section
       id="services"
       ref={rootRef}
-      className="sticky top-0 flex min-h-[170vh] flex-col justify-center bg-bg px-6 md:px-10"
+      className="sticky top-0 min-h-[170vh] bg-bg px-6 md:px-10"
     >
-      <div className="mx-auto w-full max-w-7xl py-16">
+      <div className="mx-auto w-full max-w-7xl pb-16 pt-32 md:pt-40">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
           {t.services.eyebrow}
         </p>
