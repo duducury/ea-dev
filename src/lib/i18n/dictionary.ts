@@ -97,7 +97,7 @@ export const dictionary: Record<Language, Dictionary> = {
     },
     portfolio: {
       eyebrow: "Portfólio",
-      title: "Trabalhos Selecionados",
+      title: "Confira alguns de nossos trabalhos",
       visit: "Visitar projeto →",
       featured: "Projeto em destaque",
     },
