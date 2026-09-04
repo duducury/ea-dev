@@ -89,81 +89,83 @@ export default function Hero() {
     <section
       id="top"
       ref={rootRef}
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-6 pt-32 pb-16 md:px-10"
+      className="relative flex flex-col justify-center overflow-hidden px-6 pt-32 pb-16 sm:min-h-screen md:px-10"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-[4%] -right-[4%]"
-        style={{ width: "clamp(280px, 82vw, 1180px)", perspective: "1100px" }}
-      >
-        <div ref={photoFloatRef} className="relative" style={{ aspectRatio: "1536 / 1024" }}>
+      <div className="flex flex-col items-start justify-between gap-10">
+        <div className="max-w-3xl">
+          <div className="relative z-10">
+            <h1
+              className={`font-bold uppercase leading-[0.95] tracking-tight text-text ${
+                t.hero.headline.length > 30
+                  ? "text-[clamp(30px,7.5vw,88px)]"
+                  : "text-[clamp(56px,10vw,140px)]"
+              }`}
+            >
+              {t.hero.headline.split(" ").map((word, i) => (
+                <span key={word + i} className="text-reveal-word mr-4">
+                  <span
+                    ref={(el) => {
+                      if (el) wordsRef.current[i] = el;
+                    }}
+                  >
+                    {word}
+                  </span>
+                </span>
+              ))}
+            </h1>
+
+            <div ref={revealRef} className="mt-8 max-w-xl">
+              <p className="text-[clamp(18px,2.5vw,28px)] text-text-secondary">
+                {t.hero.subtitle}
+              </p>
+
+              <div className="mt-10 flex flex-wrap items-center gap-4">
+                <a
+                  href="#work"
+                  data-cursor="link"
+                  className="rounded-full bg-accent px-7 py-3.5 text-sm font-semibold uppercase tracking-widest text-black transition-transform hover:scale-105"
+                >
+                  {t.hero.ctaWork}
+                </a>
+                <a
+                  href="#contact"
+                  data-cursor="link"
+                  className="rounded-full border border-border-strong px-7 py-3.5 text-sm font-semibold uppercase tracking-widest text-text transition-colors hover:border-accent hover:text-accent"
+                >
+                  {t.hero.ctaContact}
+                </a>
+              </div>
+            </div>
+          </div>
+
           <div
             aria-hidden="true"
-            className="ambient-glow absolute right-[8%] top-[-10%] aspect-square w-[32%] rounded-full opacity-90 blur-2xl"
-          />
-
-          <div
-            ref={photoTiltRef}
-            className="relative h-full w-full"
-            style={{ transformStyle: "preserve-3d" }}
+            className="pointer-events-none relative mt-10 w-full sm:absolute sm:mt-0 sm:w-[clamp(280px,82vw,1180px)] sm:-bottom-[4%] sm:-right-[4%]"
+            style={{ perspective: "1100px" }}
           >
-            <Image
-              src="/fundo.png"
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 62vw, 82vw"
-              className="object-contain object-bottom"
-              style={{
-                maskImage: "linear-gradient(to right, transparent, black 30%)",
-                WebkitMaskImage: "linear-gradient(to right, transparent, black 30%)",
-              }}
-            />
-          </div>
-        </div>
-      </div>
+            <div ref={photoFloatRef} className="relative" style={{ aspectRatio: "1536 / 1024" }}>
+              <div
+                aria-hidden="true"
+                className="ambient-glow absolute right-[8%] top-[-10%] aspect-square w-[32%] rounded-full opacity-90 blur-2xl"
+              />
 
-      <div className="relative z-10 flex flex-col items-start justify-between gap-10">
-        <div className="max-w-3xl">
-          <h1
-            className={`font-bold uppercase leading-[0.95] tracking-tight text-text ${
-              t.hero.headline.length > 30
-                ? "text-[clamp(30px,7.5vw,88px)]"
-                : "text-[clamp(56px,10vw,140px)]"
-            }`}
-          >
-            {t.hero.headline.split(" ").map((word, i) => (
-              <span key={word + i} className="text-reveal-word mr-4">
-                <span
-                  ref={(el) => {
-                    if (el) wordsRef.current[i] = el;
+              <div
+                ref={photoTiltRef}
+                className="relative h-full w-full"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                <Image
+                  src="/fundo.png"
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 62vw, (min-width: 640px) 82vw, 100vw"
+                  className="object-contain object-bottom"
+                  style={{
+                    maskImage: "linear-gradient(to right, transparent, black 30%)",
+                    WebkitMaskImage: "linear-gradient(to right, transparent, black 30%)",
                   }}
-                >
-                  {word}
-                </span>
-              </span>
-            ))}
-          </h1>
-
-          <div ref={revealRef} className="mt-8 max-w-xl">
-            <p className="text-[clamp(18px,2.5vw,28px)] text-text-secondary">
-              {t.hero.subtitle}
-            </p>
-
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <a
-                href="#work"
-                data-cursor="link"
-                className="rounded-full bg-accent px-7 py-3.5 text-sm font-semibold uppercase tracking-widest text-black transition-transform hover:scale-105"
-              >
-                {t.hero.ctaWork}
-              </a>
-              <a
-                href="#contact"
-                data-cursor="link"
-                className="rounded-full border border-border-strong px-7 py-3.5 text-sm font-semibold uppercase tracking-widest text-text transition-colors hover:border-accent hover:text-accent"
-              >
-                {t.hero.ctaContact}
-              </a>
+                />
+              </div>
             </div>
           </div>
         </div>
