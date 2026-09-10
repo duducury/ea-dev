@@ -229,7 +229,9 @@ body.cursor-none button {
   }
 
   #work .work-header {
-    padding-top: 2rem;
+    /* Still needs to clear the fixed navbar (~84px tall), just with less
+       breathing room than the default pt-24/pt-28. */
+    padding-top: 6rem;
   }
   #work .work-scroller-wrap {
     margin-top: 0.5rem;
@@ -241,7 +243,22 @@ body.cursor-none button {
    sticky pin's single-viewport budget. Only kicks in at md+ widths, where
    the base aspect ratio is the tallest. */
 @media (max-height: 820px) and (min-width: 768px) {
-  #work .case-image {
-    aspect-ratio: 2.8 / 1;
+  #work .work-header {
+    padding-top: 5.75rem;
   }
+  #work .case-title {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+  #work .case-image {
+    aspect-ratio: 3.2 / 1;
+  }
+}
+
+/* Fade the trailing edge of the horizontal project scroller so a partially
+   peeking next card reads as an intentional "swipe for more" hint instead of
+   text getting jaggedly cut off mid-word. */
+.work-scroller-fade {
+  -webkit-mask-image: linear-gradient(to right, black 0%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to right, black 0%, black 92%, transparent 100%);
 }

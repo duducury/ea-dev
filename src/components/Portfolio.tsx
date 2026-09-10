@@ -50,17 +50,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       data-project-card
       className="flex w-[92%] shrink-0 snap-start flex-col sm:w-[88%] md:w-[85%]"
     >
-      <div className="mb-2 flex flex-wrap items-end justify-between gap-x-6 gap-y-2 md:mb-3">
-        <div>
-          <p className="case-category text-[10px] font-semibold uppercase tracking-[0.25em] text-accent sm:text-xs">
-            0{index + 1} — {project.category[language]}
-          </p>
-          <h3 className="case-title mt-1 text-2xl font-bold leading-tight tracking-tight text-black sm:text-3xl md:text-5xl">
-            {project.name}
-          </h3>
-        </div>
+      <div className="mb-2 md:mb-3">
+        <p className="case-category text-[10px] font-semibold uppercase tracking-[0.25em] text-accent sm:text-xs">
+          0{index + 1} — {project.category[language]}
+        </p>
+        <h3 className="case-title mt-1 line-clamp-2 text-2xl font-bold leading-tight tracking-tight text-black sm:text-3xl md:text-5xl">
+          {project.name}
+        </h3>
 
-        <div className="case-meta flex flex-wrap items-center gap-x-5 gap-y-2">
+        <div className="case-meta mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 md:mt-3">
           <p className="hidden max-w-xs text-sm leading-snug text-black/70 md:block">
             {project.description[language]}
           </p>
@@ -222,7 +220,7 @@ export default function Portfolio() {
       ref={sectionRef}
       className="sticky top-0 z-10 min-h-[140vh] bg-white text-black"
     >
-      <div className="work-header mx-auto w-full max-w-7xl px-6 pt-10 md:px-10 md:pt-10">
+      <div className="work-header mx-auto w-full max-w-7xl px-6 pt-24 md:px-10 md:pt-28">
         <div className="mb-2 flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-black/70">
@@ -237,7 +235,7 @@ export default function Portfolio() {
       <div className="work-scroller-wrap relative mx-auto mt-2 w-full max-w-7xl md:mt-4">
         <div
           ref={scrollerRef}
-          className="work-scroller no-scrollbar flex w-full scroll-pl-6 gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-2 md:scroll-pl-10 md:px-10"
+          className="work-scroller work-scroller-fade no-scrollbar flex w-full scroll-pl-6 gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-2 md:scroll-pl-10 md:px-10"
         >
           {projects.map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />
