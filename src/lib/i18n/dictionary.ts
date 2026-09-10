@@ -25,6 +25,7 @@ export interface Dictionary {
   forWho: {
     eyebrow: string;
     title: string;
+    cta: string;
     categories: { name: string; description: string }[];
   };
   portfolio: {
@@ -108,6 +109,7 @@ export const dictionary: Record<Language, Dictionary> = {
     forWho: {
       eyebrow: "Para quem construímos",
       title: "Feito para o seu negócio.",
+      cta: "Ver exemplo →",
       categories: [
         {
           name: "Construction",
@@ -218,6 +220,7 @@ export const dictionary: Record<Language, Dictionary> = {
     forWho: {
       eyebrow: "Who we build for",
       title: "Built for your business.",
+      cta: "See example →",
       categories: [
         {
           name: "Construction",

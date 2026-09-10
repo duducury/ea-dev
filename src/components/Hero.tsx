@@ -13,6 +13,7 @@ export default function Hero() {
   const revealRef = useRef<HTMLDivElement>(null);
   const photoTiltRef = useRef<HTMLDivElement>(null);
   const photoFloatRef = useRef<HTMLDivElement>(null);
+  const photoWrapRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
@@ -30,8 +31,8 @@ export default function Hero() {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.fromTo(
         wordsRef.current,
-        { y: "110%" },
-        { y: "0%", duration: 0.9, stagger: 0.08 }
+        { y: "110%", scale: 1.08, filter: "blur(10px)" },
+        { y: "0%", scale: 1, filter: "blur(0px)", duration: 1, stagger: 0.08 }
       ).fromTo(
         revealRef.current,
         { y: 24, opacity: 0 },
@@ -42,6 +43,29 @@ export default function Hero() {
 
     return () => ctx.revert();
   }, [reducedMotion, t.hero.headline]);
+
+  useEffect(() => {
+    if (reducedMotion || !photoWrapRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        photoWrapRef.current,
+        { y: -40 },
+        {
+          y: 60,
+          ease: "none",
+          scrollTrigger: {
+            trigger: rootRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.6,
+          },
+        }
+      );
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
 
   useEffect(() => {
     if (reducedMotion || !photoFloatRef.current) return;
@@ -139,6 +163,7 @@ export default function Hero() {
           </div>
 
           <div
+            ref={photoWrapRef}
             aria-hidden="true"
             className="pointer-events-none relative mt-6 w-full sm:absolute sm:mt-0 sm:w-[clamp(280px,82vw,1180px)] sm:-bottom-[4%] sm:-right-[4%]"
             style={{ perspective: "1100px" }}

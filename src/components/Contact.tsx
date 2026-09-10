@@ -1,7 +1,10 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Mail } from "lucide-react";
 import { GithubIcon, InstagramIcon, LinkedinIcon } from "./icons/BrandIcons";
+import { gsap } from "@/lib/gsap";
+import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const contacts = [
@@ -17,26 +20,55 @@ const contacts = [
 
 export default function Contact() {
   const { t } = useLanguage();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const els = gsap.utils.toArray<HTMLElement>(".contact-reveal");
+
+      if (reducedMotion) {
+        gsap.set(els, { opacity: 1, y: 0, scale: 1 });
+        return;
+      }
+
+      gsap.fromTo(
+        els,
+        { opacity: 0, y: 30, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: rootRef.current, start: "top 70%" },
+        }
+      );
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
 
   return (
-    <section id="contact" className="relative z-10 bg-bg px-6 py-16 md:px-10 md:py-28">
-      <div className="mx-auto max-w-4xl text-center">
-        <h2 className="text-[clamp(36px,7vw,96px)] font-bold leading-[1.02] tracking-tight">
+    <section id="contact" className="services-atmosphere relative z-10 px-6 py-20 md:px-10 md:py-32">
+      <div className="mx-auto max-w-4xl text-center" ref={rootRef}>
+        <h2 className="contact-reveal text-[clamp(36px,7vw,96px)] font-bold leading-[1.02] tracking-tight">
           {t.contact.title}
         </h2>
-        <p className="mt-6 text-[clamp(18px,2.5vw,28px)] text-text-secondary">
+        <p className="contact-reveal mt-6 text-[clamp(18px,2.5vw,28px)] text-text-secondary">
           {t.contact.subtitle}
         </p>
 
         <a
           href="mailto:hello@eadev.com"
           data-cursor="link"
-          className="mt-10 inline-block rounded-full bg-accent px-10 py-4 text-sm font-semibold uppercase tracking-widest text-black transition-transform hover:scale-105"
+          className="contact-reveal mt-10 inline-block rounded-full bg-accent px-10 py-4 text-sm font-semibold uppercase tracking-widest text-black shadow-[0_0_0_0_var(--color-accent-glow)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_50px_10px_var(--color-accent-glow)]"
         >
           {t.contact.cta}
         </a>
 
-        <ul className="mt-10 flex flex-col flex-wrap items-center justify-center gap-5 text-sm uppercase tracking-widest text-text-secondary md:mt-16 md:flex-row md:gap-8">
+        <ul className="contact-reveal mt-10 flex flex-col flex-wrap items-center justify-center gap-5 text-sm uppercase tracking-widest text-text-secondary md:mt-16 md:flex-row md:gap-8">
           {contacts.map(({ label, href, Icon }) => (
             <li key={href}>
               <a

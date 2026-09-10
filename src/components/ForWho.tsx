@@ -1,36 +1,44 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { HardHat, PaintRoller, Trees, UtensilsCrossed, ShoppingBag, Store } from "lucide-react";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { gsap } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-const icons = [HardHat, PaintRoller, Trees, UtensilsCrossed, ShoppingBag, Store];
+const images = [
+  "/construction.png",
+  "/remodeling.png",
+  "/landscaping.png",
+  "/restaurant.png",
+  "/retail.png",
+  "/smallbusines.png",
+];
 
 export default function ForWho() {
   const { t } = useLanguage();
   const rootRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>(".audience-card");
 
       if (reducedMotion) {
-        gsap.set(cards, { opacity: 1, y: 0 });
+        gsap.set(cards, { opacity: 1, y: 0, scale: 1 });
         return;
       }
 
       gsap.fromTo(
         cards,
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 40, scale: 0.96 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
-          stagger: 0.08,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: rootRef.current,
@@ -53,39 +61,49 @@ export default function ForWho() {
           {t.forWho.title}
         </h2>
 
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 md:mt-14 md:grid-cols-3 md:gap-5">
-          {t.forWho.categories.map((category, i) => {
-            const Icon = icons[i];
-            const isActive = activeIndex === i;
-            return (
-              <div
-                key={category.name}
-                onClick={() => setActiveIndex((cur) => (cur === i ? null : i))}
-                className="audience-card group relative aspect-square cursor-pointer overflow-hidden rounded-2xl border border-border bg-surface transition-colors duration-300 hover:border-accent/40 md:aspect-[4/3]"
-              >
-                <div
-                  className={`absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 text-center transition-all duration-300 ease-out group-hover:-translate-y-2 group-hover:opacity-0 ${
-                    isActive ? "-translate-y-2 opacity-0" : "translate-y-0 opacity-100"
-                  }`}
-                >
-                  <Icon className="h-6 w-6 text-accent md:h-8 md:w-8" strokeWidth={1.5} />
-                  <span className="text-xs font-semibold uppercase tracking-widest text-text sm:text-sm">
-                    {category.name}
-                  </span>
-                </div>
+        <div className="mt-8 grid grid-cols-1 gap-4 md:mt-14 md:grid-cols-2 md:gap-6">
+          {t.forWho.categories.map((category, i) => (
+            <a
+              key={category.name}
+              href="#contact"
+              data-cursor="view"
+              className="audience-card group relative aspect-[3/2] overflow-hidden rounded-2xl border border-border bg-surface transition-colors duration-500 hover:border-accent/50 sm:aspect-[16/10] md:rounded-3xl"
+            >
+              <Image
+                src={images[i]}
+                alt={`${category.name} — ${category.description}`}
+                fill
+                sizes="(min-width: 768px) 45vw, 92vw"
+                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.08]"
+              />
 
-                <div
-                  className={`absolute inset-0 flex items-center justify-center bg-black/95 p-4 text-center transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 ${
-                    isActive ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
-                  }`}
-                >
-                  <p className="text-xs leading-snug text-text-secondary sm:text-sm">
-                    {category.description}
-                  </p>
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/10 transition-opacity duration-500 group-hover:from-black/95 group-hover:via-black/50" />
+
+              <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 shadow-[inset_0_0_60px_8px_var(--color-accent-glow)] transition-opacity duration-500 group-hover:opacity-100 md:rounded-3xl" />
+
+              <span className="absolute left-4 top-4 font-mono text-xs font-semibold text-white/70 md:left-6 md:top-6">
+                0{i + 1}
+              </span>
+
+              <div className="absolute inset-x-4 bottom-4 md:inset-x-6 md:bottom-6">
+                <h3 className="text-lg font-bold uppercase tracking-wide text-white sm:text-xl md:text-2xl">
+                  {category.name}
+                </h3>
+
+                <div className="grid grid-rows-[0fr] transition-all duration-500 ease-out group-hover:mt-2 group-hover:grid-rows-[1fr]">
+                  <div className="overflow-hidden">
+                    <p className="max-w-sm pt-1 text-xs leading-snug text-white/75 sm:text-sm">
+                      {category.description}
+                    </p>
+                    <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-accent">
+                      {t.forWho.cta}
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={2} />
+                    </span>
+                  </div>
                 </div>
               </div>
-            );
-          })}
+            </a>
+          ))}
         </div>
       </div>
     </section>

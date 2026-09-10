@@ -11,6 +11,8 @@ const icons = [Compass, PenTool, Code2, Rocket, TrendingUp];
 export default function Process() {
   const { t } = useLanguage();
   const rootRef = useRef<HTMLDivElement>(null);
+  const lineTrackRef = useRef<HTMLDivElement>(null);
+  const lineFillRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
@@ -19,6 +21,7 @@ export default function Process() {
 
       if (reducedMotion) {
         gsap.set(rows, { opacity: 1, x: 0 });
+        gsap.set(lineFillRef.current, { scaleY: 1 });
         return;
       }
 
@@ -32,6 +35,21 @@ export default function Process() {
           stagger: 0.15,
           ease: "power3.out",
           scrollTrigger: { trigger: rootRef.current, start: "top 75%" },
+        }
+      );
+
+      gsap.fromTo(
+        lineFillRef.current,
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: lineTrackRef.current,
+            start: "top 60%",
+            end: "bottom 80%",
+            scrub: 0.5,
+          },
         }
       );
     }, rootRef);
@@ -49,18 +67,29 @@ export default function Process() {
           {t.process.title}
         </h2>
 
-        <div className="relative mt-8 flex flex-col md:mt-14">
+        <div className="relative mt-8 flex flex-col md:mt-14" ref={lineTrackRef}>
           <div
             aria-hidden="true"
-            className="process-line absolute bottom-0 left-[18px] top-0 w-px origin-top bg-accent/50 md:left-[22px]"
+            className="absolute bottom-0 left-[18px] top-0 w-px bg-border md:left-[22px]"
+          />
+          <div
+            ref={lineFillRef}
+            aria-hidden="true"
+            className="absolute bottom-0 left-[18px] top-0 w-px origin-top bg-accent md:left-[22px]"
           />
           {t.process.steps.map((step, i) => {
             const Icon = icons[i];
             return (
               <div
                 key={step.number}
-                className="process-step flex flex-col gap-2 border-t border-border py-4 md:flex-row md:items-center md:gap-10 md:py-7"
+                className="process-step relative flex flex-col gap-2 overflow-hidden border-t border-border py-4 md:flex-row md:items-center md:gap-10 md:py-7"
               >
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-2 -top-4 select-none text-[80px] font-bold leading-none text-white/[0.03] md:-top-6 md:text-[140px]"
+                >
+                  {step.number}
+                </span>
                 <div className="flex items-center gap-3 md:w-56 md:gap-4">
                   <div className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border-strong bg-surface md:h-11 md:w-11">
                     <Icon className="h-4 w-4 text-accent md:h-5 md:w-5" strokeWidth={1.5} />
@@ -68,7 +97,7 @@ export default function Process() {
                   <span className="font-mono text-xs text-accent md:text-sm">{step.number}</span>
                   <h3 className="text-lg font-semibold text-text md:text-2xl">{step.title}</h3>
                 </div>
-                <p className="text-sm text-text-secondary md:text-base">{step.description}</p>
+                <p className="relative text-sm text-text-secondary md:text-base">{step.description}</p>
               </div>
             );
           })}

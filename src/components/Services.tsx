@@ -73,7 +73,7 @@ export default function Services() {
                 key={service.title}
                 className="service-card group relative flex flex-col overflow-hidden rounded-[20px] border border-white/[0.08] bg-[rgba(8,10,10,0.82)] backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-[0_0_40px_-12px_var(--color-accent-glow)] md:rounded-[24px]"
               >
-                <div className="service-card-image relative h-[115px] overflow-hidden sm:h-[130px] md:aspect-[3/2] md:h-auto">
+                <div className="service-card-image relative h-[150px] overflow-hidden sm:h-[165px] md:aspect-[3/2] md:h-auto">
                   <Image
                     src={image.src}
                     alt={service.title}
@@ -85,24 +85,24 @@ export default function Services() {
                   <span className="pointer-events-none absolute left-2 top-2 font-mono text-[10px] font-semibold text-accent/90 md:left-3 md:top-3 md:text-xs">
                     0{i + 1}
                   </span>
-                </div>
 
-                <div className="flex flex-1 flex-col p-3 md:p-5">
-                  <h3 className="text-xs font-bold text-text sm:text-sm md:text-lg">
-                    {service.title}
-                  </h3>
-                  <p className="mt-1 flex-1 text-[11px] leading-snug text-text-secondary sm:text-xs md:mt-2 md:text-sm">
-                    {service.description}
-                  </p>
-
-                  <div className="mt-2 flex justify-end md:mt-4">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-accent transition-all duration-300 group-hover:bg-accent/20 md:h-9 md:w-9">
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between p-2.5 md:p-4">
+                    <h3 className="text-xs font-bold text-white sm:text-sm md:text-lg">
+                      {service.title}
+                    </h3>
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-black/40 text-accent backdrop-blur-sm transition-all duration-300 group-hover:bg-accent/20 md:h-8 md:w-8">
                       <ArrowRight
-                        className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 md:h-4 md:w-4"
+                        className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 md:h-3.5 md:w-3.5"
                         strokeWidth={2}
                       />
                     </span>
                   </div>
+                </div>
+
+                <div className="p-2.5 pt-1.5 md:p-4 md:pt-2">
+                  <p className="line-clamp-1 text-[11px] leading-snug text-text-secondary sm:text-xs md:text-sm">
+                    {service.description}
+                  </p>
                 </div>
               </div>
             );

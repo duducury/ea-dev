@@ -45,49 +45,50 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   };
 
   return (
-    <article
-      ref={cardRef}
-      data-project-card
-      className="grid w-[90%] shrink-0 snap-start grid-cols-1 items-center gap-4 sm:w-[85%] md:w-full md:grid-cols-[0.85fr_1.15fr] md:gap-10 lg:gap-14"
-    >
-      <div className="min-w-0">
-        <p className="case-category text-[10px] font-semibold uppercase tracking-[0.25em] text-accent sm:text-xs">
-          0{index + 1} — {project.category[language]}
-        </p>
-        <h3 className="case-title mt-1.5 text-xl font-bold leading-tight tracking-tight text-black sm:text-2xl md:mt-3 md:text-4xl">
-          {project.name}
-        </h3>
-        <p className="case-description mt-2 max-w-md text-xs leading-relaxed text-black/60 sm:text-sm md:mt-4 md:text-base">
-          {project.description[language]}
-        </p>
-
-        <div className="case-tags mt-3 flex flex-wrap gap-x-3 gap-y-1 md:mt-5">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-[10px] font-semibold uppercase tracking-widest text-black/40"
-            >
-              {tag}
-            </span>
-          ))}
+    <article ref={cardRef} data-project-card className="flex w-full shrink-0 snap-start flex-col">
+      <div className="mb-3 flex flex-wrap items-end justify-between gap-x-6 gap-y-2 md:mb-5">
+        <div>
+          <p className="case-category text-[10px] font-semibold uppercase tracking-[0.25em] text-accent sm:text-xs">
+            0{index + 1} — {project.category[language]}
+          </p>
+          <h3 className="case-title mt-1 text-2xl font-bold leading-tight tracking-tight text-black sm:text-3xl md:text-5xl">
+            {project.name}
+          </h3>
         </div>
 
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-cursor="link"
-          className="case-cta mt-4 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-black transition-colors hover:text-accent md:mt-7 md:text-sm"
-        >
-          {t.portfolio.visit}
-          <ArrowUpRight className="h-3.5 w-3.5 md:h-4 md:w-4" strokeWidth={2} />
-        </a>
+        <div className="case-meta flex flex-wrap items-center gap-x-5 gap-y-2">
+          <p className="hidden max-w-xs text-sm leading-snug text-black/55 md:block">
+            {project.description[language]}
+          </p>
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="link"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-black transition-colors hover:text-accent sm:text-sm"
+          >
+            {t.portfolio.visit}
+            <ArrowUpRight className="h-3.5 w-3.5 md:h-4 md:w-4" strokeWidth={2} />
+          </a>
+        </div>
+      </div>
+
+      <p className="case-description mb-2 max-w-md text-xs leading-snug text-black/55 sm:text-sm md:hidden">
+        {project.description[language]}
+      </p>
+
+      <div className="case-tags mb-3 flex flex-wrap gap-x-3 gap-y-1 md:mb-4">
+        {project.tags.map((tag) => (
+          <span key={tag} className="text-[10px] font-semibold uppercase tracking-widest text-black/40">
+            {tag}
+          </span>
+        ))}
       </div>
 
       <div
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
-        className="case-image relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border shadow-[0_20px_60px_-24px_rgba(0,0,0,0.35)] sm:aspect-[16/10] md:rounded-3xl"
+        className="case-image relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border shadow-[0_24px_70px_-24px_rgba(0,0,0,0.4)] sm:aspect-[16/9] md:aspect-[2.5/1] md:rounded-3xl"
       >
         <a
           href={project.url}
@@ -104,7 +105,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                   src={project.screenshot}
                   alt={`${project.name} — ${project.category[language]}`}
                   fill
-                  sizes="(min-width: 768px) 55vw, 85vw"
+                  sizes="(min-width: 768px) 80vw, 92vw"
                   className="object-cover object-top"
                 />
               </div>
@@ -194,12 +195,12 @@ export default function Portfolio() {
 
     const ctx = gsap.context(() => {
       const textEls = activeCard.querySelectorAll(
-        ".case-category, .case-title, .case-description, .case-tags, .case-cta"
+        ".case-category, .case-title, .case-meta, .case-description, .case-tags"
       );
       gsap.fromTo(
         textEls,
         { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: "power2.out" }
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: "power2.out" }
       );
       gsap.fromTo(
         activeCard.querySelector(".case-image"),
@@ -217,65 +218,64 @@ export default function Portfolio() {
       ref={sectionRef}
       className="sticky top-0 z-10 min-h-[140vh] bg-white text-black"
     >
-      <div className="work-header mx-auto w-full max-w-7xl px-6 pt-16 md:px-10 md:pt-20">
-        <div className="mb-3 flex items-center gap-2">
+      <div className="work-header mx-auto w-full max-w-7xl px-6 pt-14 md:px-10 md:pt-16">
+        <div className="mb-2 flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-black/70">
             {t.portfolio.eyebrow}
           </p>
         </div>
-        <h2 className="max-w-3xl text-[clamp(26px,4.2vw,52px)] font-bold leading-[1.08] tracking-tight text-black">
+        <h2 className="max-w-3xl text-[clamp(24px,3.6vw,44px)] font-bold leading-[1.08] tracking-tight text-black">
           {t.portfolio.title}
         </h2>
-        <p className="work-subtitle mt-2 max-w-xl text-xs text-black/55 sm:text-sm md:text-base">
-          {t.portfolio.subtitle}
-        </p>
       </div>
 
-      <div
-        ref={scrollerRef}
-        className="work-scroller no-scrollbar mx-auto mt-5 flex w-full max-w-7xl scroll-pl-6 gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-2 md:mt-8 md:scroll-pl-10 md:px-10"
-      >
-        {projects.map((project, i) => (
-          <ProjectCard key={project.slug} project={project} index={i} />
-        ))}
-      </div>
-
-      <div className="work-nav-row mx-auto mt-4 flex w-full max-w-7xl items-center justify-center gap-6 px-6 md:px-10">
-        <button
-          type="button"
-          onClick={() => scrollByCard(-1)}
-          aria-label="Previous project"
-          data-cursor="link"
-          className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/15 text-black transition-colors hover:border-accent hover:text-accent md:flex"
+      <div className="work-scroller-wrap relative mx-auto mt-4 w-full max-w-7xl md:mt-6">
+        <div
+          ref={scrollerRef}
+          className="work-scroller no-scrollbar flex w-full scroll-pl-6 gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-2 md:scroll-pl-10 md:px-10"
         >
-          <ChevronLeft className="h-5 w-5" strokeWidth={1.75} />
-        </button>
-
-        <div className="flex items-center gap-2">
           {projects.map((project, i) => (
-            <button
-              key={project.slug}
-              type="button"
-              onClick={() => scrollToIndex(i)}
-              aria-label={`${t.portfolio.visit} ${project.name}`}
-              aria-current={i === activeIndex}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === activeIndex ? "w-6 bg-accent" : "w-2 bg-black/20 hover:bg-black/35"
-              }`}
-            />
+            <ProjectCard key={project.slug} project={project} index={i} />
           ))}
         </div>
 
-        <button
-          type="button"
-          onClick={() => scrollByCard(1)}
-          aria-label="Next project"
-          data-cursor="link"
-          className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/15 text-black transition-colors hover:border-accent hover:text-accent md:flex"
-        >
-          <ChevronRight className="h-5 w-5" strokeWidth={1.75} />
-        </button>
+        <div className="pointer-events-none absolute inset-x-0 bottom-4 flex items-center justify-center gap-4 px-6 md:bottom-6 md:px-10">
+          <button
+            type="button"
+            onClick={() => scrollByCard(-1)}
+            aria-label="Previous project"
+            data-cursor="link"
+            className="pointer-events-auto hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md transition-colors hover:bg-black/70 md:flex"
+          >
+            <ChevronLeft className="h-5 w-5" strokeWidth={1.75} />
+          </button>
+
+          <div className="pointer-events-auto flex items-center gap-2 rounded-full bg-black/50 px-3 py-2 backdrop-blur-md">
+            {projects.map((project, i) => (
+              <button
+                key={project.slug}
+                type="button"
+                onClick={() => scrollToIndex(i)}
+                aria-label={`${t.portfolio.visit} ${project.name}`}
+                aria-current={i === activeIndex}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === activeIndex ? "w-6 bg-accent" : "w-1.5 bg-white/40 hover:bg-white/60"
+                }`}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => scrollByCard(1)}
+            aria-label="Next project"
+            data-cursor="link"
+            className="pointer-events-auto hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md transition-colors hover:bg-black/70 md:flex"
+          >
+            <ChevronRight className="h-5 w-5" strokeWidth={1.75} />
+          </button>
+        </div>
       </div>
     </section>
   );
