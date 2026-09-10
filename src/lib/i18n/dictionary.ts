@@ -22,9 +22,15 @@ export interface Dictionary {
     subtitle: string;
     items: { title: string; description: string }[];
   };
+  forWho: {
+    eyebrow: string;
+    title: string;
+    categories: { name: string; description: string }[];
+  };
   portfolio: {
     eyebrow: string;
     title: string;
+    subtitle: string;
     visit: string;
     featured: string;
   };
@@ -66,9 +72,10 @@ export const dictionary: Record<Language, Dictionary> = {
       cta: "Vamos conversar →",
     },
     hero: {
-      headline: "Desenvolvemos de acordo com a sua necessidade.",
-      subtitle: "Sites, sistemas e experiências digitais construídos por Eduardo & Auler.",
-      ctaWork: "Ver nosso trabalho",
+      headline: "Criamos sites que transformam visitantes em clientes.",
+      subtitle:
+        "Sites, sistemas e experiências digitais construídos para ajudar o seu negócio a crescer.",
+      ctaWork: "Ver nosso trabalho →",
       ctaContact: "Fale Com A Gente",
       scroll: "Rolar",
     },
@@ -79,27 +86,59 @@ export const dictionary: Record<Language, Dictionary> = {
       items: [
         {
           title: "Sites",
-          description: "Sites profissionais feitos para representar o seu negócio.",
+          description:
+            "Sites profissionais para representar seu negócio e gerar novos clientes.",
         },
         {
           title: "Sistemas Web",
           description:
-            "Sistemas sob medida com banco de dados, autenticação e regras de negócio.",
+            "Sistemas personalizados para operações, automações e processos internos.",
         },
         {
           title: "E-commerce & Catálogos",
-          description: "Catálogos digitais e experiências de venda online.",
+          description: "Experiências digitais para vender produtos e apresentar seu catálogo.",
         },
         {
           title: "Soluções Sob Medida",
           description:
-            "Software desenhado para as necessidades específicas do seu negócio.",
+            "Software desenvolvido especificamente para as necessidades do seu negócio.",
+        },
+      ],
+    },
+    forWho: {
+      eyebrow: "Para quem construímos",
+      title: "Feito para o seu negócio.",
+      categories: [
+        {
+          name: "Construction",
+          description: "Mostre seus projetos, conquiste confiança e receba mais orçamentos.",
+        },
+        {
+          name: "Remodeling",
+          description: "Exiba antes e depois, atraia clientes e destaque sua qualidade.",
+        },
+        {
+          name: "Landscaping",
+          description: "Apresente seus serviços e conquiste novos clientes na sua região.",
+        },
+        {
+          name: "Restaurants",
+          description: "Cardápio, pedidos e reservas em uma experiência que representa você.",
+        },
+        {
+          name: "Retail",
+          description: "Catálogo digital e vendas online para o seu negócio crescer.",
+        },
+        {
+          name: "Small Businesses",
+          description: "Presença profissional online, feita sob medida para o seu negócio.",
         },
       ],
     },
     portfolio: {
       eyebrow: "Portfólio",
       title: "Projetos que transformam ideias em experiências digitais.",
+      subtitle: "Cada projeto é construído sob medida — não usamos templates genéricos.",
       visit: "Visitar projeto →",
       featured: "Projeto em destaque",
     },
@@ -111,7 +150,7 @@ export const dictionary: Record<Language, Dictionary> = {
       eyebrow: "Sobre a EA Dev",
       heading:
         "Não construímos só sites. Construímos ferramentas digitais que ajudam negócios a crescer.",
-      body: "Trabalhamos diretamente com empresas para entender o que elas realmente precisam — e então desenhamos e construímos. Seja um site simples ou um sistema completo, com banco de dados, painel administrativo e regras de negócio. Sem templates, sem atalhos.",
+      body: "Somos dois desenvolvedores e trabalhamos diretamente com cada cliente para entender o negócio antes de escrever uma linha de código. Seja um site simples ou um sistema completo, cada projeto é pensado especificamente para aquele negócio. Sem templates genéricos, sem atalhos.",
     },
     process: {
       eyebrow: "Processo",
@@ -146,10 +185,11 @@ export const dictionary: Record<Language, Dictionary> = {
       cta: "Let's talk →",
     },
     hero: {
-      headline: "We craft digital products.",
-      subtitle: "Websites, systems & digital experiences built by Eduardo & Auler.",
-      ctaWork: "View our work",
-      ctaContact: "Let's work together",
+      headline: "We build websites that turn visitors into customers.",
+      subtitle:
+        "Websites, systems and digital experiences built to help your business grow.",
+      ctaWork: "View our work →",
+      ctaContact: "Let's Talk",
       scroll: "Scroll",
     },
     services: {
@@ -157,24 +197,58 @@ export const dictionary: Record<Language, Dictionary> = {
       title: "Four ways we turn ideas into products.",
       subtitle: "Modern digital solutions, built to help your business grow.",
       items: [
-        { title: "Websites", description: "Professional websites designed to represent your business." },
+        {
+          title: "Websites",
+          description: "Professional websites that represent your business and win new customers.",
+        },
         {
           title: "Web Systems",
-          description: "Custom systems with databases, authentication and business logic.",
+          description: "Custom systems for operations, automation and internal processes.",
         },
         {
           title: "E-commerce & Catalogs",
-          description: "Digital catalogs and online sales experiences.",
+          description: "Digital experiences to sell products and showcase your catalog.",
         },
         {
           title: "Custom Solutions",
-          description: "Software designed around the specific needs of your business.",
+          description: "Software built specifically for the needs of your business.",
+        },
+      ],
+    },
+    forWho: {
+      eyebrow: "Who we build for",
+      title: "Built for your business.",
+      categories: [
+        {
+          name: "Construction",
+          description: "Showcase your projects, build trust and get more quote requests.",
+        },
+        {
+          name: "Remodeling",
+          description: "Show before-and-afters, attract clients and highlight your quality.",
+        },
+        {
+          name: "Landscaping",
+          description: "Present your services and win new customers in your area.",
+        },
+        {
+          name: "Restaurants",
+          description: "Menu, orders and reservations in an experience that represents you.",
+        },
+        {
+          name: "Retail",
+          description: "A digital catalog and online sales to help your business grow.",
+        },
+        {
+          name: "Small Businesses",
+          description: "A professional online presence, built specifically for your business.",
         },
       ],
     },
     portfolio: {
       eyebrow: "Portfolio",
       title: "Projects that turn ideas into digital experiences.",
+      subtitle: "Every project is built from scratch — no generic templates.",
       visit: "Visit Project →",
       featured: "Featured project",
     },
@@ -186,7 +260,7 @@ export const dictionary: Record<Language, Dictionary> = {
       eyebrow: "About EA Dev",
       heading:
         "We don't just build websites. We build digital tools that help businesses grow.",
-      body: "We work directly with businesses to understand what they actually need, then design and build it — whether that's a simple website or a full system with a database, an admin panel and business logic behind it. No templates, no shortcuts.",
+      body: "We're two developers who work directly with each client to understand the business before writing a single line of code. Whether it's a simple website or a full system, every project is built specifically for that business. No generic templates, no shortcuts.",
     },
     process: {
       eyebrow: "Process",

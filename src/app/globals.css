@@ -227,4 +227,17 @@ body.cursor-none button {
   #services .service-card-image {
     height: 52px;
   }
+
+  #work .work-header {
+    padding-top: 3.5rem;
+  }
+  #work .work-subtitle {
+    margin-top: 0.25rem;
+  }
+  #work .work-scroller {
+    margin-top: 0.75rem;
+  }
+  #work .work-nav-row {
+    margin-top: 0.5rem;
+  }
 }

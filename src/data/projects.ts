@@ -4,6 +4,7 @@ export interface Project {
   url: string;
   screenshot: string;
   technologies: string[];
+  tags: string[];
   featured?: boolean;
   category: { pt: string; en: string };
   description: { pt: string; en: string };
@@ -13,14 +14,15 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: "favela-store",
-    name: "Favela Store Catalog",
+    name: "Favela Store",
     screenshot: "/favelastore.png",
-    category: { pt: "Sistema Web", en: "Web System" },
+    category: { pt: "E-commerce", en: "E-commerce" },
     description: {
-      pt: "Um sistema completo de catálogo digital e gestão de vendas construído para um negócio de varejo em crescimento. Não é só um site — é uma ferramenta de negócio real.",
-      en: "A complete digital catalog and sales management system built for a growing retail business. Not just a website — a real business tool.",
+      pt: "Uma experiência digital criada para apresentar produtos, facilitar a navegação e transformar visitantes em compradores.",
+      en: "A digital experience built to showcase products, simplify navigation and turn visitors into buyers.",
     },
     url: "https://catalogo.favelastore.com/",
+    tags: ["E-COMMERCE", "DESIGN", "WEB DEVELOPMENT"],
     // TODO: confirm the exact production stack for this project
     technologies: ["React", "Node.js", "MySQL", "Tailwind CSS"],
     featured: true,
@@ -35,10 +37,11 @@ export const projects: Project[] = [
     screenshot: "/flooring.png",
     category: { pt: "Site Institucional", en: "Business Website" },
     description: {
-      pt: "Um site institucional profissional para uma empresa de pisos nos Estados Unidos.",
-      en: "A professional institutional website for a flooring company based in the United States.",
+      pt: "Um site institucional pensado para transmitir confiança e gerar mais pedidos de orçamento.",
+      en: "A business website designed to build trust and generate more quote requests.",
     },
     url: "http://unitedflooringamerica.com/",
+    tags: ["WEBSITE", "DESIGN", "WEB DEVELOPMENT"],
     // TODO: confirm the exact production stack for this project
     technologies: ["JavaScript", "Tailwind CSS"],
   },
@@ -46,12 +49,13 @@ export const projects: Project[] = [
     slug: "dois-amores",
     name: "Dois Amores",
     screenshot: "/picole.png",
-    category: { pt: "Site para Pequeno Negócio", en: "Small Business Website" },
+    category: { pt: "Pequeno Negócio", en: "Small Business" },
     description: {
-      pt: "Um site vitrine de produtos para um pequeno negócio de picolés gourmet.",
-      en: "A product showcase website for a small gourmet popsicle business.",
+      pt: "Um site vitrine feito para apresentar o catálogo e a identidade de um pequeno negócio de picolés gourmet.",
+      en: "A showcase website built to present the catalog and identity of a small gourmet popsicle business.",
     },
     url: "https://duducury.github.io/doisamores/",
+    tags: ["WEBSITE", "DESIGN", "BRANDING"],
     // TODO: confirm the exact production stack for this project
     technologies: ["JavaScript", "Git"],
   },

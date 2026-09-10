@@ -76,12 +76,15 @@ export default function Services() {
                 <div className="service-card-image relative h-[115px] overflow-hidden sm:h-[130px] md:aspect-[3/2] md:h-auto">
                   <Image
                     src={image.src}
-                    alt=""
+                    alt={service.title}
                     fill
                     sizes="(min-width: 768px) 24vw, 45vw"
                     className={`object-cover ${image.position} scale-105 transition-transform duration-500 ease-out group-hover:scale-[1.1]`}
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[rgba(8,10,10,0.95)] via-transparent to-transparent" />
+                  <span className="pointer-events-none absolute left-2 top-2 font-mono text-[10px] font-semibold text-accent/90 md:left-3 md:top-3 md:text-xs">
+                    0{i + 1}
+                  </span>
                 </div>
 
                 <div className="flex flex-1 flex-col p-3 md:p-5">

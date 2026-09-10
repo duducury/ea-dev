@@ -27,9 +27,9 @@ const ogImage = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "EA Dev — Sites & Sistemas Digitais",
+  title: "EA Dev — Sites e Soluções Digitais",
   description:
-    "EA Dev é um estúdio de desenvolvimento criado por Eduardo e Auler. Criamos sites, sistemas web e soluções digitais sob medida para empresas.",
+    "Criamos sites, sistemas web, e-commerce e soluções digitais sob medida para empresas. Sites que transformam visitantes em clientes.",
   applicationName: "EA Dev",
   appleWebApp: {
     title: "EA Dev",
@@ -38,14 +38,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "EA Dev — Sites & Sistemas Digitais",
-    description: "Sites, sistemas e experiências digitais construídos por Eduardo & Auler.",
+    title: "EA Dev — Sites e Soluções Digitais",
+    description:
+      "Sites, sistemas web, e-commerce e soluções digitais construídos para ajudar o seu negócio a crescer.",
     images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: "EA Dev — Sites & Sistemas Digitais",
-    description: "Sites, sistemas e experiências digitais construídos por Eduardo & Auler.",
+    title: "EA Dev — Sites e Soluções Digitais",
+    description:
+      "Sites, sistemas web, e-commerce e soluções digitais construídos para ajudar o seu negócio a crescer.",
     images: [ogImage.url],
   },
 };

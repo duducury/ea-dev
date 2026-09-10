@@ -49,7 +49,11 @@ export default function Process() {
           {t.process.title}
         </h2>
 
-        <div className="mt-8 flex flex-col md:mt-14">
+        <div className="relative mt-8 flex flex-col md:mt-14">
+          <div
+            aria-hidden="true"
+            className="process-line absolute bottom-0 left-[18px] top-0 w-px origin-top bg-accent/50 md:left-[22px]"
+          />
           {t.process.steps.map((step, i) => {
             const Icon = icons[i];
             return (
@@ -58,7 +62,7 @@ export default function Process() {
                 className="process-step flex flex-col gap-2 border-t border-border py-4 md:flex-row md:items-center md:gap-10 md:py-7"
               >
                 <div className="flex items-center gap-3 md:w-56 md:gap-4">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border-strong bg-surface md:h-11 md:w-11">
+                  <div className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border-strong bg-surface md:h-11 md:w-11">
                     <Icon className="h-4 w-4 text-accent md:h-5 md:w-5" strokeWidth={1.5} />
                   </div>
                   <span className="font-mono text-xs text-accent md:text-sm">{step.number}</span>
