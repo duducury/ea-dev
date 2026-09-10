@@ -61,7 +61,7 @@ export default function ForWho() {
           {t.forWho.title}
         </h2>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 md:mt-14 md:grid-cols-2 md:gap-6">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 md:mt-14 md:gap-6">
           {t.forWho.categories.map((category, i) => (
             <a
               key={category.name}

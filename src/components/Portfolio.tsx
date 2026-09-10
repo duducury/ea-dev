@@ -45,8 +45,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   };
 
   return (
-    <article ref={cardRef} data-project-card className="flex w-full shrink-0 snap-start flex-col">
-      <div className="mb-3 flex flex-wrap items-end justify-between gap-x-6 gap-y-2 md:mb-5">
+    <article
+      ref={cardRef}
+      data-project-card
+      className="flex w-[92%] shrink-0 snap-start flex-col sm:w-[88%] md:w-[85%]"
+    >
+      <div className="mb-2 flex flex-wrap items-end justify-between gap-x-6 gap-y-2 md:mb-3">
         <div>
           <p className="case-category text-[10px] font-semibold uppercase tracking-[0.25em] text-accent sm:text-xs">
             0{index + 1} — {project.category[language]}
@@ -57,7 +61,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
 
         <div className="case-meta flex flex-wrap items-center gap-x-5 gap-y-2">
-          <p className="hidden max-w-xs text-sm leading-snug text-black/55 md:block">
+          <p className="hidden max-w-xs text-sm leading-snug text-black/70 md:block">
             {project.description[language]}
           </p>
           <a
@@ -73,13 +77,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
       </div>
 
-      <p className="case-description mb-2 max-w-md text-xs leading-snug text-black/55 sm:text-sm md:hidden">
+      <p className="case-description mb-2 max-w-md text-xs leading-snug text-black/70 sm:text-sm md:hidden">
         {project.description[language]}
       </p>
 
-      <div className="case-tags mb-3 flex flex-wrap gap-x-3 gap-y-1 md:mb-4">
+      <div className="case-tags mb-2 flex flex-wrap gap-x-3 gap-y-1 md:mb-3">
         {project.tags.map((tag) => (
-          <span key={tag} className="text-[10px] font-semibold uppercase tracking-widest text-black/40">
+          <span key={tag} className="text-[10px] font-semibold uppercase tracking-widest text-black/50">
             {tag}
           </span>
         ))}
@@ -88,7 +92,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
-        className="case-image relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border shadow-[0_24px_70px_-24px_rgba(0,0,0,0.4)] sm:aspect-[16/9] md:aspect-[2.5/1] md:rounded-3xl"
+        className="case-image relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border shadow-[0_24px_70px_-24px_rgba(0,0,0,0.4)] sm:aspect-[3/2] md:aspect-[2.25/1] md:rounded-3xl"
       >
         <a
           href={project.url}
@@ -218,7 +222,7 @@ export default function Portfolio() {
       ref={sectionRef}
       className="sticky top-0 z-10 min-h-[140vh] bg-white text-black"
     >
-      <div className="work-header mx-auto w-full max-w-7xl px-6 pt-14 md:px-10 md:pt-16">
+      <div className="work-header mx-auto w-full max-w-7xl px-6 pt-10 md:px-10 md:pt-10">
         <div className="mb-2 flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-black/70">
@@ -230,7 +234,7 @@ export default function Portfolio() {
         </h2>
       </div>
 
-      <div className="work-scroller-wrap relative mx-auto mt-4 w-full max-w-7xl md:mt-6">
+      <div className="work-scroller-wrap relative mx-auto mt-2 w-full max-w-7xl md:mt-4">
         <div
           ref={scrollerRef}
           className="work-scroller no-scrollbar flex w-full scroll-pl-6 gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-2 md:scroll-pl-10 md:px-10"

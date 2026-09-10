@@ -229,15 +229,19 @@ body.cursor-none button {
   }
 
   #work .work-header {
-    padding-top: 3.5rem;
+    padding-top: 2rem;
   }
-  #work .work-subtitle {
-    margin-top: 0.25rem;
-  }
-  #work .work-scroller {
-    margin-top: 0.75rem;
-  }
-  #work .work-nav-row {
+  #work .work-scroller-wrap {
     margin-top: 0.5rem;
+  }
+}
+
+/* On short-but-wide laptop screens (1366x768, 1280x800, 1280x720, etc.) the
+   case-study image needs a shorter crop to keep the whole card inside the
+   sticky pin's single-viewport budget. Only kicks in at md+ widths, where
+   the base aspect ratio is the tallest. */
+@media (max-height: 820px) and (min-width: 768px) {
+  #work .case-image {
+    aspect-ratio: 2.8 / 1;
   }
 }
