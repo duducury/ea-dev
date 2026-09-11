@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { projects, type Project } from "@/data/projects";
@@ -130,8 +130,14 @@ export default function Portfolio() {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
+  const activeIndexRef = useRef(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const reducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
 
   const getCardStep = () => {
     const el = scrollerRef.current;
@@ -140,21 +146,79 @@ export default function Portfolio() {
     return card ? card.getBoundingClientRect().width + 24 : el.clientWidth * 0.8;
   };
 
-  const scrollByCard = useCallback((direction: 1 | -1) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const card = el.querySelector("article");
-    const step = card ? card.getBoundingClientRect().width + 24 : el.clientWidth * 0.8;
-    el.scrollBy({ left: direction * step, behavior: "smooth" });
-  }, []);
-
-  const scrollToIndex = (index: number) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    el.scrollTo({ left: index * getCardStep(), behavior: "smooth" });
-  };
-
+  // Scroll-jack: pin the section and translate the card row horizontally as
+  // the page scrolls, so a normal downward scroll/swipe moves through the
+  // projects instead of straight past the section. Once the last card is
+  // reached the section unpins and the page scrolls on as usual. Skipped for
+  // reduced motion, where the row stays a plain native horizontal scroller.
   useEffect(() => {
+    if (reducedMotion) return;
+    const section = sectionRef.current;
+    const scroller = scrollerRef.current;
+    if (!section || !scroller) return;
+
+    const ctx = gsap.context(() => {
+      const getDistance = () => Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+      if (getDistance() <= 0) return;
+
+      const tween = gsap.to(scroller, {
+        x: () => -getDistance(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => `+=${getDistance()}`,
+          scrub: 0.6,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const index = Math.round(self.progress * (projects.length - 1));
+            setActiveIndex((prev) => (prev === index ? prev : index));
+          },
+        },
+      });
+
+      scrollTriggerRef.current = tween.scrollTrigger ?? null;
+    }, section);
+
+    return () => {
+      scrollTriggerRef.current = null;
+      ctx.revert();
+    };
+  }, [reducedMotion]);
+
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      const clamped = Math.min(projects.length - 1, Math.max(0, index));
+
+      if (reducedMotion) {
+        const el = scrollerRef.current;
+        if (!el) return;
+        el.scrollTo({ left: clamped * getCardStep(), behavior: "smooth" });
+        return;
+      }
+
+      const st = scrollTriggerRef.current;
+      if (!st) return;
+      const progress = projects.length > 1 ? clamped / (projects.length - 1) : 0;
+      const y = st.start + progress * (st.end - st.start);
+      window.scrollTo({ top: y, behavior: "smooth" });
+    },
+    [reducedMotion]
+  );
+
+  const scrollByCard = useCallback(
+    (direction: 1 | -1) => {
+      scrollToIndex(activeIndexRef.current + direction);
+    },
+    [scrollToIndex]
+  );
+
+  // Native scroll tracking — only wired up for the reduced-motion fallback,
+  // where the row is a real horizontal scroller instead of a scroll-jacked one.
+  useEffect(() => {
+    if (!reducedMotion) return;
     const el = scrollerRef.current;
     if (!el) return;
 
@@ -167,7 +231,7 @@ export default function Portfolio() {
 
     el.addEventListener("scroll", handleScroll, { passive: true });
     return () => el.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [reducedMotion]);
 
   // Keyboard navigation, only while the portfolio section is the one in view.
   useEffect(() => {
@@ -218,7 +282,9 @@ export default function Portfolio() {
     <section
       id="work"
       ref={sectionRef}
-      className="sticky top-0 z-10 min-h-[140vh] bg-white text-black"
+      className={`relative z-10 bg-white text-black ${
+        reducedMotion ? "sticky top-0 min-h-[140vh]" : "h-screen overflow-hidden"
+      }`}
     >
       <div className="work-header mx-auto w-full max-w-7xl px-6 pt-24 md:px-10 md:pt-28">
         <div className="mb-2 flex items-center gap-2">
@@ -235,7 +301,11 @@ export default function Portfolio() {
       <div className="work-scroller-wrap relative mx-auto mt-2 w-full max-w-7xl md:mt-4">
         <div
           ref={scrollerRef}
-          className="work-scroller work-scroller-fade no-scrollbar flex w-full scroll-pl-6 gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-2 md:scroll-pl-10 md:px-10"
+          className={`work-scroller work-scroller-fade no-scrollbar flex w-full gap-6 px-6 pb-2 md:px-10 ${
+            reducedMotion
+              ? "scroll-pl-6 overflow-x-auto scroll-smooth snap-x snap-mandatory md:scroll-pl-10"
+              : "overflow-hidden"
+          }`}
         >
           {projects.map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />
