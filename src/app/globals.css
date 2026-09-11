@@ -270,7 +270,17 @@ header > div:last-child {
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
   -webkit-backface-visibility: hidden;
   -webkit-perspective: 1000;
   -webkit-transform: translateZ(0);
+  z-index: 40 !important;
+}
+
+/* Ensure menu doesn't cause scrolling issues on iOS */
+body.overflow-hidden {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
 }

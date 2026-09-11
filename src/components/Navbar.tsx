@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
@@ -8,6 +8,7 @@ export default function Navbar() {
   const { t, language, toggleLanguage } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   const links = [
     { label: t.nav.work, href: "#work" },
@@ -25,10 +26,33 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    if (menuOpen) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.documentElement.style.overflow = "";
+      document.body.classList.remove("overflow-hidden");
+    }
     return () => {
-      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      document.body.classList.remove("overflow-hidden");
     };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+
+    if (menuOpen) {
+      // Force iOS to recalculate positioning by triggering a reflow
+      overlay.style.display = "none";
+      // Use requestAnimationFrame to ensure the change takes effect
+      requestAnimationFrame(() => {
+        overlay.style.display = "";
+        // Force a repaint
+        void overlay.offsetHeight;
+      });
+    }
   }, [menuOpen]);
 
   return (
@@ -105,6 +129,7 @@ export default function Navbar() {
       </nav>
 
       <div
+        ref={overlayRef}
         className={`fixed top-0 left-0 right-0 bottom-0 z-40 flex flex-col items-center justify-center gap-8 bg-black transition-opacity duration-300 will-change-opacity lg:hidden ${
           menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
