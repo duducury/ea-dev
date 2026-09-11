@@ -137,6 +137,12 @@ export default function Portfolio() {
     const scroller = scrollerRef.current;
     if (!section || !scroller) return;
 
+    // How much extra vertical scroll to require beyond the raw horizontal
+    // distance — higher means slower, more deliberate movement through the
+    // cards. 1 would map scroll 1:1 to horizontal travel (fast); 2.2 asks for
+    // roughly twice the scroll to cross the same distance.
+    const SCROLL_SLOWDOWN = 2.2;
+
     const ctx = gsap.context(() => {
       const getDistance = () => Math.max(0, scroller.scrollWidth - scroller.clientWidth);
       if (getDistance() <= 0) return;
@@ -147,7 +153,7 @@ export default function Portfolio() {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: () => `+=${getDistance()}`,
+          end: () => `+=${getDistance() * SCROLL_SLOWDOWN}`,
           scrub: 0.6,
           pin: true,
           anticipatePin: 1,
