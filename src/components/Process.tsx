@@ -97,7 +97,7 @@ export default function Process() {
                   <span className="font-mono text-xs text-accent md:text-sm">{step.number}</span>
                   <h3 className="text-lg font-semibold text-text md:text-2xl">{step.title}</h3>
                 </div>
-                <p className="relative text-sm text-text-secondary md:text-base">{step.description}</p>
+                <p className="relative pl-7 text-sm text-text-secondary md:pl-0 md:text-base">{step.description}</p>
               </div>
             );
           })}
