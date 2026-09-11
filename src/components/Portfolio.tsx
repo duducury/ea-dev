@@ -144,7 +144,19 @@ export default function Portfolio() {
     const SCROLL_SLOWDOWN = 2.2;
 
     const ctx = gsap.context(() => {
-      const getDistance = () => Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+      // Travel exactly far enough that the last card ends up centered in the
+      // viewport (rather than flush against the right edge), so it's fully
+      // readable before the page hands off to normal vertical scroll.
+      const getDistance = () => {
+        const cards = scroller.querySelectorAll<HTMLElement>("article");
+        const lastCard = cards[cards.length - 1];
+        const viewport = scroller.parentElement;
+        if (!lastCard || !viewport) {
+          return Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+        }
+        const targetLeft = (viewport.clientWidth - lastCard.offsetWidth) / 2;
+        return Math.max(0, lastCard.offsetLeft - targetLeft);
+      };
       if (getDistance() <= 0) return;
 
       const tween = gsap.to(scroller, {
