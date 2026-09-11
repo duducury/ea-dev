@@ -11,28 +11,8 @@ import ProjectPreview from "./ProjectPreview";
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { t, language } = useLanguage();
-  const cardRef = useRef<HTMLElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (reducedMotion) return;
-      gsap.fromTo(
-        cardRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: "power3.out",
-          scrollTrigger: { trigger: cardRef.current, start: "top 90%" },
-        }
-      );
-    }, cardRef);
-
-    return () => ctx.revert();
-  }, [reducedMotion]);
 
   const handleEnter = () => {
     if (reducedMotion) return;
@@ -46,7 +26,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
   return (
     <article
-      ref={cardRef}
       data-project-card
       className="flex w-[92%] shrink-0 snap-start flex-col sm:w-[88%] md:w-[85%]"
     >
@@ -108,6 +87,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                   alt={`${project.name} — ${project.category[language]}`}
                   fill
                   sizes="(min-width: 768px) 80vw, 92vw"
+                  loading="eager"
                   className="object-cover object-top"
                 />
               </div>
@@ -298,13 +278,17 @@ export default function Portfolio() {
         </h2>
       </div>
 
-      <div className="work-scroller-wrap relative mx-auto mt-2 w-full max-w-7xl md:mt-4">
+      <div
+        className={`work-scroller-wrap relative mx-auto mt-2 w-full max-w-7xl md:mt-4 ${
+          reducedMotion ? "" : "work-scroller-fade overflow-hidden"
+        }`}
+      >
         <div
           ref={scrollerRef}
-          className={`work-scroller work-scroller-fade no-scrollbar flex w-full gap-6 px-6 pb-2 md:px-10 ${
+          className={`work-scroller no-scrollbar flex w-full gap-6 px-6 pb-2 md:px-10 ${
             reducedMotion
-              ? "scroll-pl-6 overflow-x-auto scroll-smooth snap-x snap-mandatory md:scroll-pl-10"
-              : "overflow-hidden"
+              ? "work-scroller-fade scroll-pl-6 overflow-x-auto scroll-smooth snap-x snap-mandatory md:scroll-pl-10"
+              : ""
           }`}
         >
           {projects.map((project, i) => (
