@@ -105,7 +105,7 @@ export default function Navbar() {
       </nav>
 
       <div
-        className={`fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-black transition-opacity duration-300 lg:hidden ${
+        className={`fixed top-0 left-0 right-0 bottom-0 z-40 flex flex-col items-center justify-center gap-8 bg-black transition-opacity duration-300 will-change-opacity lg:hidden ${
           menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
