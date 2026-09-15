@@ -137,12 +137,6 @@ export default function Portfolio() {
     const scroller = scrollerRef.current;
     if (!section || !scroller) return;
 
-    // How much extra vertical scroll to require beyond the raw horizontal
-    // distance — higher means slower, more deliberate movement through the
-    // cards. 1 would map scroll 1:1 to horizontal travel (fast); 2.2 asks for
-    // roughly twice the scroll to cross the same distance.
-    const SCROLL_SLOWDOWN = 2.2;
-
     const ctx = gsap.context(() => {
       // Travel exactly far enough that the last card ends up centered in the
       // viewport (rather than flush against the right edge), so it's fully
@@ -159,13 +153,20 @@ export default function Portfolio() {
       };
       if (getDistance() <= 0) return;
 
+      // How much vertical scroll it takes to cross the whole row. Paced by
+      // viewport HEIGHT rather than the horizontal pixel distance, so it
+      // doesn't blow up on wide desktop screens (where cards are much wider
+      // than on a phone) — every project gets roughly one viewport's worth
+      // of scroll to sit with, regardless of how wide the screen is.
+      const getScrollLength = () => window.innerHeight * 0.9 * (projects.length - 1);
+
       const tween = gsap.to(scroller, {
         x: () => -getDistance(),
         ease: "none",
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: () => `+=${getDistance() * SCROLL_SLOWDOWN}`,
+          end: () => `+=${getScrollLength()}`,
           scrub: 0.6,
           pin: true,
           anticipatePin: 1,
