@@ -38,7 +38,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </h3>
 
         <div className="case-meta mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 md:mt-3">
-          <p className="hidden max-w-xs text-sm leading-snug text-black/70 md:block">
+          <p className="hidden max-w-xs min-h-[2.5rem] text-sm leading-snug text-black/70 md:line-clamp-2">
             {project.description[language]}
           </p>
           <a
