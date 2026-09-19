@@ -7,6 +7,7 @@ import ForWho from "@/components/ForWho";
 import Developers from "@/components/Developers";
 import About from "@/components/About";
 import Process from "@/components/Process";
+import Pricing from "@/components/Pricing";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -23,6 +24,7 @@ export default function Home() {
         <Developers />
         <About />
         <Process />
+        <Pricing />
         <Contact />
       </main>
       <Footer />

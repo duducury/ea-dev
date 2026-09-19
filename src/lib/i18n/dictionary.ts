@@ -49,6 +49,13 @@ export interface Dictionary {
     title: string;
     steps: { number: string; title: string; description: string }[];
   };
+  pricing: {
+    eyebrow: string;
+    title: string;
+    note: string;
+    cta: string;
+    plans: { name: string; price: string; features: string[]; footnote?: string }[];
+  };
   contact: {
     title: string;
     subtitle: string;
@@ -165,6 +172,67 @@ export const dictionary: Record<Language, Dictionary> = {
         { number: "05", title: "Crescimento", description: "Melhorar e manter o produto." },
       ],
     },
+    pricing: {
+      eyebrow: "Preços",
+      title: "Soluções para o seu negócio",
+      note: "Cada sistema é desenvolvido de acordo com as necessidades da sua empresa.",
+      cta: "Solicitar orçamento",
+      plans: [
+        {
+          name: "Landing Page",
+          price: "A partir de $300",
+          features: [
+            "1 página profissional",
+            "Design personalizado",
+            "Responsivo",
+            "Integração com WhatsApp",
+            "Formulário de contato",
+            "SEO básico",
+          ],
+          footnote: "+$50 por página adicional",
+        },
+        {
+          name: "Site para Restaurante",
+          price: "A partir de $350",
+          features: [
+            "Cardápio digital",
+            "Categorias e produtos",
+            "Carrinho de compras",
+            "Sistema de pedidos",
+            "Checkout pelo WhatsApp",
+            "Responsivo",
+            "Fácil atualização",
+          ],
+        },
+        {
+          name: "Loja Virtual",
+          price: "$500 – $700",
+          features: [
+            "Catálogo de produtos",
+            "Carrinho",
+            "Checkout",
+            "Login de clientes",
+            "Painel administrativo",
+            "Gerenciamento de pedidos",
+            "Cadastro/edição de produtos",
+            "Responsivo",
+          ],
+        },
+        {
+          name: "Sistema para sua Empresa",
+          price: "Valor personalizado",
+          features: [
+            "Painel administrativo",
+            "Cadastro de usuários",
+            "Banco de dados",
+            "Controle de pedidos e informações",
+            "Automação de processos",
+            "Funcionalidades personalizadas",
+            "Integrações",
+          ],
+        },
+      ],
+    },
     contact: {
       title: "Tem um projeto em mente?",
       subtitle: "Vamos construir algo incrível.",
@@ -274,6 +342,67 @@ export const dictionary: Record<Language, Dictionary> = {
         { number: "03", title: "Build", description: "Develop the website or system." },
         { number: "04", title: "Launch", description: "Deploy, test and deliver." },
         { number: "05", title: "Grow", description: "Improve and maintain the product." },
+      ],
+    },
+    pricing: {
+      eyebrow: "Pricing",
+      title: "Solutions for your business",
+      note: "Every system is built according to your company's needs.",
+      cta: "Request a quote",
+      plans: [
+        {
+          name: "Landing Page",
+          price: "Starting at $300",
+          features: [
+            "1 professional page",
+            "Custom design",
+            "Responsive",
+            "WhatsApp integration",
+            "Contact form",
+            "Basic SEO",
+          ],
+          footnote: "+$50 per additional page",
+        },
+        {
+          name: "Restaurant Website",
+          price: "Starting at $350",
+          features: [
+            "Digital menu",
+            "Categories and items",
+            "Shopping cart",
+            "Ordering system",
+            "WhatsApp checkout",
+            "Responsive",
+            "Easy to update",
+          ],
+        },
+        {
+          name: "Online Store",
+          price: "$500 – $700",
+          features: [
+            "Product catalog",
+            "Shopping cart",
+            "Checkout",
+            "Customer login",
+            "Admin dashboard",
+            "Order management",
+            "Add/edit products",
+            "Responsive",
+          ],
+        },
+        {
+          name: "Custom Business System",
+          price: "Custom pricing",
+          features: [
+            "Admin dashboard",
+            "User accounts",
+            "Database",
+            "Order and data management",
+            "Process automation",
+            "Custom features",
+            "Integrations",
+          ],
+        },
       ],
     },
     contact: {
