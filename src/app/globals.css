@@ -238,15 +238,18 @@ body.cursor-none button {
   }
 }
 
-/* On short-but-wide laptop screens the case-study image needs a shorter crop
-   to keep the whole card inside the sticky pin's single-viewport budget.
-   Only kicks in at md+ widths, where the base aspect ratio is the tallest.
-   Card width (and so the aspect-ratio-driven image height) maxes out around
-   a max-w-7xl container, so it stops scaling down with viewport width past
-   ~1360px — meaning a tall-but-not-huge laptop window (MacBook Air/Pro at
-   typical browser-chrome-reduced heights, ~830-1000px) hits the exact same
-   overflow a short netbook screen does. 1024px covers those laptops; a
-   genuinely large desktop viewport is comfortably above it. */
+/* On short-but-wide laptop screens the whole card needs to shrink to keep
+   inside the sticky pin's single-viewport budget. Only kicks in at md+
+   widths, where the base aspect ratio is the tallest. Card width (and so
+   the aspect-ratio-driven image height) maxes out around a max-w-7xl
+   container, so it stops scaling down with viewport width past ~1360px —
+   meaning a tall-but-not-huge laptop window (MacBook Air/Pro at typical
+   browser-chrome-reduced heights, ~830-1000px) hits the exact same overflow
+   a short netbook screen does. Scaling the card's WIDTH down (instead of
+   stretching the image to a shorter aspect-ratio) keeps the screenshot
+   looking like an actual webpage instead of a squashed sliver — text and
+   image shrink together, proportioned the same as everywhere else. 1024px
+   covers those laptops; a genuinely large desktop viewport stays untouched. */
 @media (max-height: 1024px) and (min-width: 768px) {
   #work .work-header {
     padding-top: 5.75rem;
@@ -255,18 +258,24 @@ body.cursor-none button {
     font-size: 2rem;
     line-height: 1.1;
   }
-  #work .case-image {
-    aspect-ratio: 3.5 / 1;
+  #work [data-project-card] {
+    width: 62%;
   }
 }
 
-/* Very short laptop/tablet windows (≤720px tall) need an even shorter crop
-   on top of the rule above — desktop/tablet only (min-width), since phones
-   in this height range (e.g. iPhone SE) already have their own tuned
-   mobile aspect ratio via the responsive Tailwind classes on .case-image. */
+/* Shorter still (e.g. a 1366x768 laptop) — shrink a bit further. */
+@media (max-height: 820px) and (min-width: 768px) {
+  #work [data-project-card] {
+    width: 54%;
+  }
+}
+
+/* Very short laptop/tablet windows (≤720px tall) need to shrink further —
+   desktop/tablet only (min-width), since phones in this height range (e.g.
+   iPhone SE) already have their own tuned mobile card size. */
 @media (max-height: 720px) and (min-width: 768px) {
-  #work .case-image {
-    aspect-ratio: 4 / 1;
+  #work [data-project-card] {
+    width: 46%;
   }
 }
 
