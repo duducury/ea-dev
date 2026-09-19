@@ -238,11 +238,16 @@ body.cursor-none button {
   }
 }
 
-/* On short-but-wide laptop screens (1366x768, 1280x800, 1280x720, etc.) the
-   case-study image needs a shorter crop to keep the whole card inside the
-   sticky pin's single-viewport budget. Only kicks in at md+ widths, where
-   the base aspect ratio is the tallest. */
-@media (max-height: 820px) and (min-width: 768px) {
+/* On short-but-wide laptop screens the case-study image needs a shorter crop
+   to keep the whole card inside the sticky pin's single-viewport budget.
+   Only kicks in at md+ widths, where the base aspect ratio is the tallest.
+   Card width (and so the aspect-ratio-driven image height) maxes out around
+   a max-w-7xl container, so it stops scaling down with viewport width past
+   ~1360px — meaning a tall-but-not-huge laptop window (MacBook Air/Pro at
+   typical browser-chrome-reduced heights, ~830-1000px) hits the exact same
+   overflow a short netbook screen does. 1024px covers those laptops; a
+   genuinely large desktop viewport is comfortably above it. */
+@media (max-height: 1024px) and (min-width: 768px) {
   #work .work-header {
     padding-top: 5.75rem;
   }
@@ -251,7 +256,17 @@ body.cursor-none button {
     line-height: 1.1;
   }
   #work .case-image {
-    aspect-ratio: 3.2 / 1;
+    aspect-ratio: 3.5 / 1;
+  }
+}
+
+/* Very short laptop/tablet windows (≤720px tall) need an even shorter crop
+   on top of the rule above — desktop/tablet only (min-width), since phones
+   in this height range (e.g. iPhone SE) already have their own tuned
+   mobile aspect ratio via the responsive Tailwind classes on .case-image. */
+@media (max-height: 720px) and (min-width: 768px) {
+  #work .case-image {
+    aspect-ratio: 4 / 1;
   }
 }
 
