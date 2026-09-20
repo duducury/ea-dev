@@ -217,7 +217,13 @@ export default function Portfolio() {
       const distance = getDistance();
       const st = scrollTriggerRef.current;
       if (!distance || !st) return;
-      const scale = (st.end - st.start) / distance;
+      // A plain 1:1 (finger-pixel : card-pixel) ratio means a full swipe only
+      // covers a small fraction of the row, since "distance" spans every
+      // card — feels sluggish. DRAG_SENSITIVITY makes the cards travel
+      // faster than the finger so a normal swipe gets you noticeably
+      // further, independent of how the vertical scroll is paced.
+      const DRAG_SENSITIVITY = 2.6;
+      const scale = ((st.end - st.start) / distance) * DRAG_SENSITIVITY;
       // `behavior: "instant"` is required here — the page sets a global
       // scroll-behavior: smooth, which the legacy two-arg scrollBy(x, y)
       // form inherits, turning every one of these rapid-fire calls into an
