@@ -168,7 +168,7 @@ export const dictionary: Record<Language, Dictionary> = {
     },
     portfolio: {
       eyebrow: "Portfólio",
-      title: "Projetos que transformam ideias em experiências digitais.",
+      title: "Confira alguns dos nossos projetos.",
       subtitle: "Cada projeto é construído sob medida — não usamos templates genéricos.",
       visit: "Visitar projeto →",
       featured: "Projeto em destaque",
@@ -364,7 +364,7 @@ export const dictionary: Record<Language, Dictionary> = {
     },
     portfolio: {
       eyebrow: "Portfolio",
-      title: "Projects that turn ideas into digital experiences.",
+      title: "Check out some of our projects.",
       subtitle: "Every project is built from scratch — no generic templates.",
       visit: "Visit Project →",
       featured: "Featured project",
