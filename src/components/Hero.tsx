@@ -230,7 +230,7 @@ export default function Hero() {
         className="relative flex min-h-screen flex-col items-center justify-center gap-10 bg-black px-6 py-24 text-center md:flex-row md:items-center md:justify-between md:px-10 md:text-left"
       >
         <div className="max-w-xl">
-          <p className="text-[clamp(28px,5vw,56px)] font-bold leading-[1.1] text-white">
+          <p className="bg-gradient-to-r from-white via-white to-accent bg-clip-text text-[clamp(28px,5vw,56px)] font-bold leading-[1.1] text-transparent">
             {t.hero.slides[0].title}
           </p>
           <p className="mt-6 text-[clamp(16px,2vw,22px)] text-white/60">
@@ -293,7 +293,7 @@ export default function Hero() {
                 isLast={i === t.hero.slides.length - 1}
                 align="self-start"
               >
-                <p className="font-bold uppercase leading-[1.05] tracking-tight text-white text-[clamp(22px,5.6vw,36px)] md:text-[clamp(28px,4.4vw,42px)]">
+                <p className="bg-gradient-to-r from-white via-white to-accent bg-clip-text font-bold uppercase leading-[1.05] tracking-tight text-transparent text-[clamp(22px,5.6vw,36px)] md:text-[clamp(28px,4.4vw,42px)]">
                   {slide.title}
                 </p>
               </CinematicText>
@@ -303,7 +303,7 @@ export default function Hero() {
 
         {/* Subtitle + final CTA — bottom band on mobile/tablet, below the
             laptop; folded into the combined desktop block below at lg. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-6 pb-[max(2.5rem,env(safe-area-inset-bottom))] text-center sm:pb-14 md:px-10 md:pb-16 lg:hidden">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-6 pb-[max(5rem,calc(env(safe-area-inset-bottom)+3.5rem))] text-center sm:pb-20 md:px-10 md:pb-16 lg:hidden">
           <div className="relative grid w-full max-w-md">
             {t.hero.slides.map((slide, i) => {
               const isLast = i === t.hero.slides.length - 1;
@@ -347,7 +347,7 @@ export default function Hero() {
                   isLast={isLast}
                   align="self-center"
                 >
-                  <p className="font-bold uppercase leading-[1.05] tracking-tight text-white text-[clamp(30px,4vw,56px)]">
+                  <p className="bg-gradient-to-r from-white via-white to-accent bg-clip-text font-bold uppercase leading-[1.05] tracking-tight text-transparent text-[clamp(30px,4vw,56px)]">
                     {slide.title}
                   </p>
                   <p className="mt-4 text-white/60 text-[clamp(15px,1.3vw,20px)]">
