@@ -15,59 +15,45 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const FRAME_COUNT = 232;
 const SEQUENCE_HEIGHT_VH = 400;
+const SLIDE_STARTS = [0, 0.2, 0.4, 0.6, 0.8];
 
 function frameSrc(index: number) {
   return `/sequence/frame_${index}.webp`;
 }
 
-const BLUR_DIM = "blur(9px)";
-const BLUR_SHARP = "blur(0px)";
-
-/** Fade a scroll-linked value in, hold it, then fade it out across four
- * progress checkpoints; the last text instead holds to the very end. Rises
- * up from below dim and slightly out of focus, sharpening to full
- * brightness as it settles — opacity and blur are compositor-only, so
- * (unlike animating `color`, which forces the text to be re-rasterized
- * every frame and can visibly clip glyphs mid-transition) this stays
- * artifact-free while scrubbing fast. */
-function textRange(
-  start: number,
-  isLast: boolean
-): [number[], number[], number[], string[]] {
+/** Fade a scroll-linked value in quickly, hold it fully readable for most
+ * of its slot, then fade it out across four progress checkpoints; the last
+ * text instead holds to the very end. The transition itself is short and
+ * has no blur — it only needs to be legible for the brief moment it's
+ * moving, since it spends nearly all of its on-screen time fully settled. */
+function textRange(start: number, isLast: boolean): [number[], number[], number[]] {
   if (isLast) {
-    const input = [start, start + 0.1, 1];
-    return [input, [0, 1, 1], [72, 0, 0], [BLUR_DIM, BLUR_SHARP, BLUR_SHARP]];
+    const input = [start, start + 0.04, 1];
+    return [input, [0, 1, 1], [28, 0, 0]];
   }
-  const input = [start, start + 0.08, start + 0.16, start + 0.22];
-  return [
-    input,
-    [0, 1, 1, 0],
-    [72, 0, 0, -32],
-    [BLUR_DIM, BLUR_SHARP, BLUR_SHARP, BLUR_DIM],
-  ];
+  const input = [start, start + 0.03, start + 0.15, start + 0.18];
+  return [input, [0, 1, 1, 0], [28, 0, 0, -16]];
 }
 
 function CinematicText({
   progress,
   start,
   isLast,
+  align = "self-end",
   children,
 }: {
   progress: ReturnType<typeof useSpring>;
   start: number;
   isLast: boolean;
+  align?: string;
   children: React.ReactNode;
 }) {
-  const [input, opacityOut, yOut, filterOut] = textRange(start, isLast);
+  const [input, opacityOut, yOut] = textRange(start, isLast);
   const opacity = useTransform(progress, input, opacityOut);
   const y = useTransform(progress, input, yOut);
-  const filter = useTransform(progress, input, filterOut);
 
   return (
-    <motion.div
-      style={{ opacity, y, filter }}
-      className="col-start-1 row-start-1 self-end lg:self-center"
-    >
+    <motion.div style={{ opacity, y }} className={`col-start-1 row-start-1 ${align}`}>
       {children}
     </motion.div>
   );
@@ -245,9 +231,11 @@ export default function Hero() {
       >
         <div className="max-w-xl">
           <p className="text-[clamp(28px,5vw,56px)] font-bold leading-[1.1] text-white">
-            {t.hero.texts[0]}
+            {t.hero.slides[0].title}
           </p>
-          <p className="mt-6 text-[clamp(16px,2vw,22px)] text-white/60">{t.hero.texts[2]}</p>
+          <p className="mt-6 text-[clamp(16px,2vw,22px)] text-white/60">
+            {t.hero.slides[0].subtitle}
+          </p>
           <a
             href="#contact"
             data-cursor="link"
@@ -283,29 +271,87 @@ export default function Hero() {
         </AnimatePresence>
 
         {/* Laptop sequence — vertically centered in the full viewport on
-            mobile/tablet (padding-bottom reserves room for the text band
-            below, so "centered" means the middle of the space above the
-            text, not squashed to the top), its own right-hand column from
-            lg upward (a separate column from the text, never underneath
-            it, with generous padding so it never touches the edges). */}
-        <div className="absolute inset-0 flex items-center justify-center px-6 pb-[34%] pt-16 sm:pb-[30%] md:px-10 md:pb-[28%] lg:inset-y-0 lg:left-auto lg:right-0 lg:h-full lg:w-[58%] lg:px-14 lg:pb-0 lg:pt-0 xl:px-16">
+            mobile/tablet (the title sits above it, the subtitle below it),
+            its own right-hand column from lg upward (a separate column
+            from the text, never underneath it, with generous padding so
+            it never touches the edges). */}
+        <div className="absolute inset-0 flex items-center justify-center px-6 pb-[26%] pt-24 sm:pb-[24%] md:px-10 md:pb-[22%] lg:inset-y-0 lg:left-auto lg:right-0 lg:h-full lg:w-[58%] lg:px-14 lg:pb-0 lg:pt-0 xl:px-16">
           <div className="relative h-full w-full max-w-[1200px]">
             <LaptopCanvas images={imagesRef} progress={smoothProgress} isLoaded={isLoaded} />
           </div>
         </div>
 
-        {/* Cinematic text — bottom-anchored band on mobile/tablet (never
-            over the laptop, which stays above it), its own left-hand
-            column from lg upward. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col justify-end px-6 pb-[11%] text-center sm:pb-[9%] md:px-10 md:pb-16 lg:inset-y-0 lg:right-auto lg:h-full lg:w-[40%] lg:items-start lg:justify-center lg:px-0 lg:pb-0 lg:pl-16 lg:text-left xl:pl-20">
-          <div className="relative grid w-full max-w-xl">
-            {t.hero.texts.map((text, i) => {
-              const isLast = i === t.hero.texts.length - 1;
-              const start = [0, 0.24, 0.48, 0.72][i];
+        {/* Title — top band on mobile/tablet, above the laptop; folded
+            into the combined desktop block below at lg. */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 px-6 pt-20 text-center sm:pt-24 md:px-10 lg:hidden">
+          <div className="relative grid w-full">
+            {t.hero.slides.map((slide, i) => (
+              <CinematicText
+                key={slide.title}
+                progress={smoothProgress}
+                start={SLIDE_STARTS[i]}
+                isLast={i === t.hero.slides.length - 1}
+                align="self-start"
+              >
+                <p className="font-bold uppercase leading-[1.05] tracking-tight text-white text-[clamp(22px,5.6vw,36px)] md:text-[clamp(28px,4.4vw,42px)]">
+                  {slide.title}
+                </p>
+              </CinematicText>
+            ))}
+          </div>
+        </div>
+
+        {/* Subtitle + final CTA — bottom band on mobile/tablet, below the
+            laptop; folded into the combined desktop block below at lg. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-6 pb-10 text-center sm:pb-12 md:px-10 md:pb-14 lg:hidden">
+          <div className="relative grid w-full max-w-md">
+            {t.hero.slides.map((slide, i) => {
+              const isLast = i === t.hero.slides.length - 1;
               return (
-                <CinematicText key={text} progress={smoothProgress} start={start} isLast={isLast}>
-                  <p className="font-bold uppercase leading-[1.05] tracking-tight text-white text-[clamp(24px,5.2vw,52px)] md:text-[clamp(34px,4.4vw,52px)] lg:text-[clamp(30px,4vw,56px)]">
-                    {text}
+                <CinematicText
+                  key={slide.title}
+                  progress={smoothProgress}
+                  start={SLIDE_STARTS[i]}
+                  isLast={isLast}
+                  align="self-end"
+                >
+                  <p className="text-white/60 text-[clamp(14px,3.6vw,17px)] sm:text-[clamp(15px,2.8vw,18px)]">
+                    {slide.subtitle}
+                  </p>
+                  {isLast && (
+                    <a
+                      href="#contact"
+                      data-cursor="link"
+                      className="pointer-events-auto mt-6 inline-flex items-center justify-center rounded-full bg-accent px-7 py-3.5 text-sm font-semibold uppercase tracking-widest text-black transition-transform hover:scale-105"
+                    >
+                      {t.hero.cta}
+                    </a>
+                  )}
+                </CinematicText>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Desktop (lg+) — title and subtitle combined in their own
+            left-hand column, as before. */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden lg:flex lg:h-full lg:w-[40%] lg:flex-col lg:items-start lg:justify-center lg:pl-16 lg:text-left xl:pl-20">
+          <div className="relative grid w-full max-w-xl">
+            {t.hero.slides.map((slide, i) => {
+              const isLast = i === t.hero.slides.length - 1;
+              return (
+                <CinematicText
+                  key={slide.title}
+                  progress={smoothProgress}
+                  start={SLIDE_STARTS[i]}
+                  isLast={isLast}
+                  align="self-center"
+                >
+                  <p className="font-bold uppercase leading-[1.05] tracking-tight text-white text-[clamp(30px,4vw,56px)]">
+                    {slide.title}
+                  </p>
+                  <p className="mt-4 text-white/60 text-[clamp(15px,1.3vw,20px)]">
+                    {slide.subtitle}
                   </p>
                   {isLast && (
                     <a
