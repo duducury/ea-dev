@@ -7,7 +7,6 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { projects, type Project } from "@/data/projects";
-import ProjectPreview from "./ProjectPreview";
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { t, language } = useLanguage();
@@ -33,12 +32,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <p className="case-category text-[10px] font-semibold uppercase tracking-[0.25em] text-accent sm:text-xs">
           0{index + 1} — {project.category[language]}
         </p>
-        <h3 className="case-title mt-1 line-clamp-2 text-2xl font-bold leading-tight tracking-tight text-black sm:text-3xl md:text-5xl">
+        <h3 className="case-title mt-1 line-clamp-2 text-xl font-bold leading-tight tracking-tight text-black sm:text-2xl md:text-4xl">
           {project.name}
         </h3>
 
         <div className="case-meta mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 md:mt-3">
-          <p className="hidden max-w-xs min-h-[2.5rem] text-sm leading-snug text-black/70 md:line-clamp-2">
+          <p className="hidden max-w-xs min-h-[2.5rem] text-[13px] leading-snug text-black/70 md:line-clamp-2">
             {project.description[language]}
           </p>
           <a
@@ -54,7 +53,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
       </div>
 
-      <p className="case-description mb-2 max-w-md text-xs leading-snug text-black/70 sm:text-sm md:hidden">
+      <p className="case-description mb-2 max-w-md text-[11px] leading-snug text-black/70 sm:text-xs md:hidden">
         {project.description[language]}
       </p>
 
@@ -66,41 +65,35 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         ))}
       </div>
 
-      <div
-        onMouseEnter={handleEnter}
-        onMouseLeave={handleLeave}
-        className="case-image relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border shadow-[0_24px_70px_-24px_rgba(0,0,0,0.4)] sm:aspect-[3/2] md:aspect-[2.25/1] md:rounded-3xl"
-      >
+      <div className="case-image flex w-full justify-center">
         <a
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
           data-cursor="view"
           aria-label={`${t.portfolio.visit} ${project.name}`}
-          className="block h-full w-full"
+          className="relative block"
+          onMouseEnter={handleEnter}
+          onMouseLeave={handleLeave}
         >
-          <div ref={previewRef} className="h-full w-full">
-            <ProjectPreview url={project.url}>
-              <div className="relative h-full w-full">
-                <Image
-                  src={project.screenshot}
-                  alt={`${project.name} — ${project.category[language]}`}
-                  fill
-                  sizes="(min-width: 768px) 80vw, 92vw"
-                  loading="eager"
-                  className="object-cover object-top"
-                />
-              </div>
-            </ProjectPreview>
+          <div ref={previewRef} className="case-image-frame h-[30vh] w-auto sm:h-[34vh] md:h-[40vh] lg:h-[44vh]">
+            <Image
+              src={project.screenshot}
+              alt={`${project.name} — ${project.category[language]}`}
+              width={887}
+              height={1774}
+              loading="eager"
+              className="h-full w-auto object-contain"
+            />
           </div>
-        </a>
 
-        {project.featured && (
-          <div className="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-accent backdrop-blur-sm">
-            <Sparkles className="h-3 w-3" strokeWidth={1.75} />
-            {t.portfolio.featured}
-          </div>
-        )}
+          {project.featured && (
+            <div className="pointer-events-none absolute -top-2 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-black/70 px-2 py-0.5 text-[8px] font-semibold uppercase tracking-widest text-accent backdrop-blur-sm sm:gap-1.5 sm:px-3 sm:py-1 sm:text-[10px]">
+              <Sparkles className="h-2.5 w-2.5 sm:h-3 sm:w-3" strokeWidth={1.75} />
+              {t.portfolio.featured}
+            </div>
+          )}
+        </a>
       </div>
     </article>
   );

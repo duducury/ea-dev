@@ -49,7 +49,7 @@ export const projects: Project[] = [
     slug: "dois-amores",
     name: "Dois Amores",
     screenshot: "/picole.png",
-    category: { pt: "Pequeno Negócio", en: "Small Business" },
+    category: { pt: "Cardápio Digital", en: "Restaurant Menu" },
     description: {
       pt: "Um site vitrine feito para apresentar o catálogo e a identidade de um pequeno negócio de picolés gourmet.",
       en: "A showcase website built to present the catalog and identity of a small gourmet popsicle business.",

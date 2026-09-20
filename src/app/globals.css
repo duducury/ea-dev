@@ -236,6 +236,9 @@ body.cursor-none button {
   #work .work-scroller-wrap {
     margin-top: 0.5rem;
   }
+  #work .case-image-frame {
+    height: 22vh;
+  }
 }
 
 /* On short-but-wide laptop screens the whole card needs to shrink to keep
@@ -261,12 +264,18 @@ body.cursor-none button {
   #work [data-project-card] {
     width: 62%;
   }
+  #work .case-image-frame {
+    height: 32vh;
+  }
 }
 
 /* Shorter still (e.g. a 1366x768 laptop) — shrink a bit further. */
 @media (max-height: 820px) and (min-width: 768px) {
   #work [data-project-card] {
     width: 54%;
+  }
+  #work .case-image-frame {
+    height: 28vh;
   }
 }
 
@@ -276,6 +285,9 @@ body.cursor-none button {
 @media (max-height: 720px) and (min-width: 768px) {
   #work [data-project-card] {
     width: 46%;
+  }
+  #work .case-image-frame {
+    height: 24vh;
   }
 }
 
