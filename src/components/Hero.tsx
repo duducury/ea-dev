@@ -20,15 +20,31 @@ function frameSrc(index: number) {
   return `/sequence/frame_${index}.webp`;
 }
 
+const BLUR_DIM = "blur(9px)";
+const BLUR_SHARP = "blur(0px)";
+
 /** Fade a scroll-linked value in, hold it, then fade it out across four
- * progress checkpoints; the last text instead holds to the very end. */
-function textRange(start: number, isLast: boolean): [number[], number[], number[]] {
+ * progress checkpoints; the last text instead holds to the very end. Rises
+ * up from below dim and slightly out of focus, sharpening to full
+ * brightness as it settles — opacity and blur are compositor-only, so
+ * (unlike animating `color`, which forces the text to be re-rasterized
+ * every frame and can visibly clip glyphs mid-transition) this stays
+ * artifact-free while scrubbing fast. */
+function textRange(
+  start: number,
+  isLast: boolean
+): [number[], number[], number[], string[]] {
   if (isLast) {
-    const input = [start, start + 0.08, 1];
-    return [input, [0, 1, 1], [44, 0, 0]];
+    const input = [start, start + 0.1, 1];
+    return [input, [0, 1, 1], [72, 0, 0], [BLUR_DIM, BLUR_SHARP, BLUR_SHARP]];
   }
-  const input = [start, start + 0.06, start + 0.16, start + 0.22];
-  return [input, [0, 1, 1, 0], [44, 0, 0, -28]];
+  const input = [start, start + 0.08, start + 0.16, start + 0.22];
+  return [
+    input,
+    [0, 1, 1, 0],
+    [72, 0, 0, -32],
+    [BLUR_DIM, BLUR_SHARP, BLUR_SHARP, BLUR_DIM],
+  ];
 }
 
 function CinematicText({
@@ -42,13 +58,14 @@ function CinematicText({
   isLast: boolean;
   children: React.ReactNode;
 }) {
-  const [input, opacityOut, yOut] = textRange(start, isLast);
+  const [input, opacityOut, yOut, filterOut] = textRange(start, isLast);
   const opacity = useTransform(progress, input, opacityOut);
   const y = useTransform(progress, input, yOut);
+  const filter = useTransform(progress, input, filterOut);
 
   return (
     <motion.div
-      style={{ opacity, y }}
+      style={{ opacity, y, filter }}
       className="col-start-1 row-start-1 self-end lg:self-center"
     >
       {children}
@@ -280,7 +297,7 @@ export default function Hero() {
         {/* Cinematic text — bottom-anchored band on mobile/tablet (never
             over the laptop, which stays above it), its own left-hand
             column from lg upward. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col justify-end px-6 pb-10 text-center sm:pb-12 md:px-10 md:pb-16 lg:inset-y-0 lg:right-auto lg:h-full lg:w-[40%] lg:items-start lg:justify-center lg:px-0 lg:pb-0 lg:pl-16 lg:text-left xl:pl-20">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col justify-end px-6 pb-[11%] text-center sm:pb-[9%] md:px-10 md:pb-16 lg:inset-y-0 lg:right-auto lg:h-full lg:w-[40%] lg:items-start lg:justify-center lg:px-0 lg:pb-0 lg:pl-16 lg:text-left xl:pl-20">
           <div className="relative grid w-full max-w-xl">
             {t.hero.texts.map((text, i) => {
               const isLast = i === t.hero.texts.length - 1;
