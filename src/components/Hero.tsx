@@ -265,7 +265,7 @@ export default function Hero() {
       className="relative bg-black"
       style={{ height: `${SEQUENCE_HEIGHT_VH}vh` }}
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-0 h-dvh w-full overflow-hidden">
         <AnimatePresence>
           {!isLoaded && <Preloader key="preloader" percent={percentLoaded} />}
         </AnimatePresence>
@@ -283,7 +283,7 @@ export default function Hero() {
 
         {/* Title — top band on mobile/tablet, above the laptop; folded
             into the combined desktop block below at lg. */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 px-6 pt-20 text-center sm:pt-24 md:px-10 lg:hidden">
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 px-6 pt-24 text-center sm:pt-28 md:px-10 lg:hidden">
           <div className="relative grid w-full">
             {t.hero.slides.map((slide, i) => (
               <CinematicText
@@ -303,7 +303,7 @@ export default function Hero() {
 
         {/* Subtitle + final CTA — bottom band on mobile/tablet, below the
             laptop; folded into the combined desktop block below at lg. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-6 pb-10 text-center sm:pb-12 md:px-10 md:pb-14 lg:hidden">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-6 pb-[max(2.5rem,env(safe-area-inset-bottom))] text-center sm:pb-14 md:px-10 md:pb-16 lg:hidden">
           <div className="relative grid w-full max-w-md">
             {t.hero.slides.map((slide, i) => {
               const isLast = i === t.hero.slides.length - 1;
