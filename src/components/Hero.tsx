@@ -25,10 +25,10 @@ function frameSrc(index: number) {
 function textRange(start: number, isLast: boolean): [number[], number[], number[]] {
   if (isLast) {
     const input = [start, start + 0.08, 1];
-    return [input, [0, 1, 1], [18, 0, 0]];
+    return [input, [0, 1, 1], [44, 0, 0]];
   }
   const input = [start, start + 0.06, start + 0.16, start + 0.22];
-  return [input, [0, 1, 1, 0], [18, 0, 0, -18]];
+  return [input, [0, 1, 1, 0], [44, 0, 0, -28]];
 }
 
 function CinematicText({
@@ -147,7 +147,7 @@ function Preloader({ percent }: { percent: number }) {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-6 bg-[#050505]"
+      className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-6 bg-black"
     >
       <Image src="/logo-icon.png" alt="EA Dev" width={1904} height={826} className="h-9 w-auto opacity-90" />
       <div className="flex flex-col items-center gap-3">
@@ -224,7 +224,7 @@ export default function Hero() {
     return (
       <section
         id="top"
-        className="relative flex min-h-screen flex-col items-center justify-center gap-10 bg-[#050505] px-6 py-24 text-center md:flex-row md:items-center md:justify-between md:px-10 md:text-left"
+        className="relative flex min-h-screen flex-col items-center justify-center gap-10 bg-black px-6 py-24 text-center md:flex-row md:items-center md:justify-between md:px-10 md:text-left"
       >
         <div className="max-w-xl">
           <p className="text-[clamp(28px,5vw,56px)] font-bold leading-[1.1] text-white">
@@ -257,7 +257,7 @@ export default function Hero() {
     <section
       id="top"
       ref={containerRef}
-      className="relative bg-[#050505]"
+      className="relative bg-black"
       style={{ height: `${SEQUENCE_HEIGHT_VH}vh` }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
@@ -265,21 +265,22 @@ export default function Hero() {
           {!isLoaded && <Preloader key="preloader" percent={percentLoaded} />}
         </AnimatePresence>
 
-        {/* Laptop sequence — upper band on mobile/tablet (stacked
-            composition, laptop always fully visible), its own right-hand
-            column from lg upward (a separate column from the text, never
-            underneath it, with generous padding so it never touches the
-            edges). Tablet-portrait widths stay stacked rather than being
-            squeezed into a cramped side-by-side row. */}
-        <div className="absolute inset-x-0 top-0 flex h-[48%] items-center justify-center px-6 pt-20 sm:h-[52%] md:h-[56%] md:px-10 lg:inset-y-0 lg:left-auto lg:right-0 lg:h-full lg:w-[58%] lg:px-14 lg:pt-0 xl:px-16">
+        {/* Laptop sequence — vertically centered in the full viewport on
+            mobile/tablet (padding-bottom reserves room for the text band
+            below, so "centered" means the middle of the space above the
+            text, not squashed to the top), its own right-hand column from
+            lg upward (a separate column from the text, never underneath
+            it, with generous padding so it never touches the edges). */}
+        <div className="absolute inset-0 flex items-center justify-center px-6 pb-[34%] pt-16 sm:pb-[30%] md:px-10 md:pb-[28%] lg:inset-y-0 lg:left-auto lg:right-0 lg:h-full lg:w-[58%] lg:px-14 lg:pb-0 lg:pt-0 xl:px-16">
           <div className="relative h-full w-full max-w-[1200px]">
             <LaptopCanvas images={imagesRef} progress={smoothProgress} isLoaded={isLoaded} />
           </div>
         </div>
 
-        {/* Cinematic text — lower band on mobile/tablet (never over the
-            laptop), its own left-hand column from lg upward. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex h-[52%] flex-col justify-center px-6 pb-8 text-center sm:h-[48%] md:h-[44%] md:px-10 lg:inset-y-0 lg:right-auto lg:h-full lg:w-[40%] lg:items-start lg:justify-center lg:px-0 lg:pb-0 lg:pl-16 lg:text-left xl:pl-20">
+        {/* Cinematic text — bottom-anchored band on mobile/tablet (never
+            over the laptop, which stays above it), its own left-hand
+            column from lg upward. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col justify-end px-6 pb-10 text-center sm:pb-12 md:px-10 md:pb-16 lg:inset-y-0 lg:right-auto lg:h-full lg:w-[40%] lg:items-start lg:justify-center lg:px-0 lg:pb-0 lg:pl-16 lg:text-left xl:pl-20">
           <div className="relative grid w-full max-w-xl">
             {t.hero.texts.map((text, i) => {
               const isLast = i === t.hero.texts.length - 1;
