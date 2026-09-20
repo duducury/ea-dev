@@ -10,11 +10,8 @@ export interface Dictionary {
     cta: string;
   };
   hero: {
-    headline: string;
-    subtitle: string;
-    ctaWork: string;
-    ctaContact: string;
-    scroll: string;
+    texts: string[];
+    cta: string;
   };
   services: {
     eyebrow: string;
@@ -80,12 +77,13 @@ export const dictionary: Record<Language, Dictionary> = {
       cta: "Vamos conversar →",
     },
     hero: {
-      headline: "Criamos sites que transformam visitantes em clientes.",
-      subtitle:
-        "Sites, sistemas e experiências digitais construídos para ajudar o seu negócio a crescer.",
-      ctaWork: "Ver nosso trabalho →",
-      ctaContact: "Fale Com A Gente",
-      scroll: "Rolar",
+      texts: [
+        "Criamos sites que transformam visitantes em clientes.",
+        "Do conceito ao código.",
+        "Experiências digitais pensadas para fazer seu negócio crescer.",
+        "Vamos construir algo incrível.",
+      ],
+      cta: "Começar um projeto →",
     },
     services: {
       eyebrow: "O que construímos",
@@ -255,12 +253,13 @@ export const dictionary: Record<Language, Dictionary> = {
       cta: "Let's talk →",
     },
     hero: {
-      headline: "We build websites that turn visitors into customers.",
-      subtitle:
-        "Websites, systems and digital experiences built to help your business grow.",
-      ctaWork: "View our work →",
-      ctaContact: "Let's Talk",
-      scroll: "Scroll",
+      texts: [
+        "We build websites that turn visitors into customers.",
+        "From concept to code.",
+        "Digital experiences designed to help your business grow.",
+        "Let's build something great.",
+      ],
+      cta: "Start a project →",
     },
     services: {
       eyebrow: "What we build",
