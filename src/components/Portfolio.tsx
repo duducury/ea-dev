@@ -76,12 +76,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
         >
-          <div ref={previewRef} className="case-image-frame h-[30vh] w-auto sm:h-[34vh] md:h-[40vh] lg:h-[44vh]">
+          <div ref={previewRef} className="case-image-frame h-[34vh] w-auto sm:h-[38vh] md:h-[44vh] lg:h-[48vh]">
             <Image
               src={project.screenshot}
               alt={`${project.name} — ${project.category[language]}`}
-              width={887}
-              height={1774}
+              width={1536}
+              height={1024}
               loading="eager"
               className="h-full w-auto object-contain"
             />
