@@ -230,8 +230,9 @@ export default function Hero() {
         className="relative flex min-h-screen flex-col items-center justify-center gap-10 bg-black px-6 py-24 text-center md:flex-row md:items-center md:justify-between md:px-10 md:text-left"
       >
         <div className="max-w-xl">
-          <p className="bg-gradient-to-r from-white via-white to-accent bg-clip-text text-[clamp(28px,5vw,56px)] font-bold leading-[1.1] text-transparent">
+          <p className="text-[clamp(28px,5vw,56px)] font-bold leading-[1.1] text-white">
             {t.hero.slides[0].title}
+            <span className="text-accent">{t.hero.slides[0].highlight}</span>
           </p>
           <p className="mt-6 text-[clamp(16px,2vw,22px)] text-white/60">
             {t.hero.slides[0].subtitle}
@@ -293,8 +294,9 @@ export default function Hero() {
                 isLast={i === t.hero.slides.length - 1}
                 align="self-start"
               >
-                <p className="bg-gradient-to-r from-white via-white to-accent bg-clip-text font-bold uppercase leading-[1.05] tracking-tight text-transparent text-[clamp(22px,5.6vw,36px)] md:text-[clamp(28px,4.4vw,42px)]">
+                <p className="font-bold uppercase leading-[1.05] tracking-tight text-white text-[clamp(22px,5.6vw,36px)] md:text-[clamp(28px,4.4vw,42px)]">
                   {slide.title}
+                  <span className="text-accent">{slide.highlight}</span>
                 </p>
               </CinematicText>
             ))}
@@ -347,8 +349,9 @@ export default function Hero() {
                   isLast={isLast}
                   align="self-center"
                 >
-                  <p className="bg-gradient-to-r from-white via-white to-accent bg-clip-text font-bold uppercase leading-[1.05] tracking-tight text-transparent text-[clamp(30px,4vw,56px)]">
+                  <p className="font-bold uppercase leading-[1.05] tracking-tight text-white text-[clamp(30px,4vw,56px)]">
                     {slide.title}
+                    <span className="text-accent">{slide.highlight}</span>
                   </p>
                   <p className="mt-4 text-white/60 text-[clamp(15px,1.3vw,20px)]">
                     {slide.subtitle}

@@ -10,7 +10,7 @@ export interface Dictionary {
     cta: string;
   };
   hero: {
-    slides: { title: string; subtitle: string }[];
+    slides: { title: string; highlight: string; subtitle: string }[];
     cta: string;
   };
   services: {
@@ -79,26 +79,31 @@ export const dictionary: Record<Language, Dictionary> = {
     hero: {
       slides: [
         {
-          title: "SEJA BEM-VINDO À EA DEV.",
+          title: "SEJA BEM-VINDO À ",
+          highlight: "EA DEV.",
           subtitle: "Transformamos ideias em experiências digitais.",
         },
         {
-          title: "CRIAMOS SITES, SISTEMAS WEB, E-COMMERCE E SOLUÇÕES SOB MEDIDA.",
+          title: "CRIAMOS SITES, SISTEMAS WEB, E-COMMERCE E SOLUÇÕES ",
+          highlight: "SOB MEDIDA.",
           subtitle:
             "Tudo em um só lugar, desenvolvido de acordo com as necessidades do seu negócio.",
         },
         {
           title:
-            "CRIAMOS FERRAMENTAS PARA APRESENTAR SUA EMPRESA, CONQUISTAR CLIENTES E LEVAR SEU NEGÓCIO A UM NOVO NÍVEL.",
+            "CRIAMOS FERRAMENTAS PARA APRESENTAR SUA EMPRESA, CONQUISTAR CLIENTES E LEVAR SEU NEGÓCIO A UM ",
+          highlight: "NOVO NÍVEL.",
           subtitle:
             "Design, tecnologia e estratégia unidos para criar uma presença digital profissional.",
         },
         {
-          title: "UMA PRESENÇA DIGITAL PROFISSIONAL PARA O SEU NEGÓCIO.",
+          title: "UMA PRESENÇA DIGITAL PROFISSIONAL PARA O ",
+          highlight: "SEU NEGÓCIO.",
           subtitle: "Mais do que estar online, queremos ajudar sua empresa a crescer.",
         },
         {
-          title: "PRONTO PARA TRANSFORMAR SUA IDEIA EM REALIDADE?",
+          title: "PRONTO PARA TRANSFORMAR SUA IDEIA EM ",
+          highlight: "REALIDADE?",
           subtitle: "Vamos construir algo que faça sentido para o seu negócio.",
         },
       ],
@@ -274,25 +279,30 @@ export const dictionary: Record<Language, Dictionary> = {
     hero: {
       slides: [
         {
-          title: "WELCOME TO EA DEV.",
+          title: "WELCOME TO ",
+          highlight: "EA DEV.",
           subtitle: "We turn ideas into digital experiences.",
         },
         {
-          title: "WE BUILD WEBSITES, WEB SYSTEMS, E-COMMERCE AND CUSTOM SOLUTIONS.",
+          title: "WE BUILD WEBSITES, WEB SYSTEMS, E-COMMERCE AND ",
+          highlight: "CUSTOM SOLUTIONS.",
           subtitle: "All in one place, built around your business's needs.",
         },
         {
           title:
-            "WE BUILD TOOLS TO SHOWCASE YOUR BUSINESS, WIN CUSTOMERS AND TAKE YOUR COMPANY TO THE NEXT LEVEL.",
+            "WE BUILD TOOLS TO SHOWCASE YOUR BUSINESS, WIN CUSTOMERS AND TAKE YOUR COMPANY TO THE ",
+          highlight: "NEXT LEVEL.",
           subtitle:
             "Design, technology and strategy combined to build a professional digital presence.",
         },
         {
-          title: "A PROFESSIONAL DIGITAL PRESENCE FOR YOUR BUSINESS.",
+          title: "A PROFESSIONAL DIGITAL PRESENCE FOR ",
+          highlight: "YOUR BUSINESS.",
           subtitle: "More than just being online — we want to help your business grow.",
         },
         {
-          title: "READY TO TURN YOUR IDEA INTO REALITY?",
+          title: "READY TO TURN YOUR IDEA INTO ",
+          highlight: "REALITY?",
           subtitle: "Let's build something that makes sense for your business.",
         },
       ],
