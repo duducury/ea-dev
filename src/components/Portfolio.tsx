@@ -109,6 +109,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 export default function Portfolio() {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
   const activeIndexRef = useRef(0);
@@ -126,6 +127,29 @@ export default function Portfolio() {
     return card ? card.getBoundingClientRect().width + 24 : el.clientWidth * 0.8;
   };
 
+  // Travel exactly far enough that the last card ends up centered in the
+  // viewport (rather than flush against the right edge), so it's fully
+  // readable before the page hands off to normal vertical scroll. Shared by
+  // the scroll-jack setup below and the horizontal drag handler, so both
+  // agree on how many scroll-pixels correspond to one card-pixel.
+  const getDistance = () => {
+    const scroller = scrollerRef.current;
+    const wrap = wrapRef.current;
+    if (!scroller || !wrap) return 0;
+    const cards = scroller.querySelectorAll<HTMLElement>("article");
+    const lastCard = cards[cards.length - 1];
+    if (!lastCard) return Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    const targetLeft = (wrap.clientWidth - lastCard.offsetWidth) / 2;
+    return Math.max(0, lastCard.offsetLeft - targetLeft);
+  };
+
+  // How much vertical scroll it takes to cross the whole row. Paced by
+  // viewport HEIGHT rather than the horizontal pixel distance, so it
+  // doesn't blow up on wide desktop screens (where cards are much wider
+  // than on a phone) — every project gets roughly one viewport's worth
+  // of scroll to sit with, regardless of how wide the screen is.
+  const getScrollLength = () => window.innerHeight * 0.9 * (projects.length - 1);
+
   // Scroll-jack: pin the section and translate the card row horizontally as
   // the page scrolls, so a normal downward scroll/swipe moves through the
   // projects instead of straight past the section. Once the last card is
@@ -138,27 +162,7 @@ export default function Portfolio() {
     if (!section || !scroller) return;
 
     const ctx = gsap.context(() => {
-      // Travel exactly far enough that the last card ends up centered in the
-      // viewport (rather than flush against the right edge), so it's fully
-      // readable before the page hands off to normal vertical scroll.
-      const getDistance = () => {
-        const cards = scroller.querySelectorAll<HTMLElement>("article");
-        const lastCard = cards[cards.length - 1];
-        const viewport = scroller.parentElement;
-        if (!lastCard || !viewport) {
-          return Math.max(0, scroller.scrollWidth - scroller.clientWidth);
-        }
-        const targetLeft = (viewport.clientWidth - lastCard.offsetWidth) / 2;
-        return Math.max(0, lastCard.offsetLeft - targetLeft);
-      };
       if (getDistance() <= 0) return;
-
-      // How much vertical scroll it takes to cross the whole row. Paced by
-      // viewport HEIGHT rather than the horizontal pixel distance, so it
-      // doesn't blow up on wide desktop screens (where cards are much wider
-      // than on a phone) — every project gets roughly one viewport's worth
-      // of scroll to sit with, regardless of how wide the screen is.
-      const getScrollLength = () => window.innerHeight * 0.9 * (projects.length - 1);
 
       const tween = gsap.to(scroller, {
         x: () => -getDistance(),
@@ -184,6 +188,57 @@ export default function Portfolio() {
     return () => {
       scrollTriggerRef.current = null;
       ctx.revert();
+    };
+  }, [reducedMotion]);
+
+  // Let people drag/swipe the cards sideways too, not just scroll the page
+  // vertically — both drive the exact same underlying scroll position
+  // (window.scrollBy), so it's the same scroll-jack either way and it only
+  // releases the pin once the last card is reached, same as scrolling down.
+  useEffect(() => {
+    if (reducedMotion) return;
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+
+    let dragging = false;
+    let lastX = 0;
+
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      dragging = true;
+      lastX = e.clientX;
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      lastX = e.clientX;
+      if (!dx) return;
+      const distance = getDistance();
+      const st = scrollTriggerRef.current;
+      if (!distance || !st) return;
+      const scale = (st.end - st.start) / distance;
+      // `behavior: "instant"` is required here — the page sets a global
+      // scroll-behavior: smooth, which the legacy two-arg scrollBy(x, y)
+      // form inherits, turning every one of these rapid-fire calls into an
+      // animated scroll that the next call immediately interrupts. Net
+      // effect: barely any of the drag actually registered.
+      window.scrollBy({ top: -dx * scale, behavior: "instant" });
+    };
+
+    const endDrag = () => {
+      dragging = false;
+    };
+
+    wrap.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", endDrag);
+    window.addEventListener("pointercancel", endDrag);
+    return () => {
+      wrap.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", endDrag);
+      window.removeEventListener("pointercancel", endDrag);
     };
   }, [reducedMotion]);
 
@@ -298,8 +353,11 @@ export default function Portfolio() {
       </div>
 
       <div
+        ref={wrapRef}
         className={`work-scroller-wrap relative mx-auto mt-2 w-full max-w-7xl md:mt-4 ${
-          reducedMotion ? "" : "work-scroller-fade overflow-hidden"
+          reducedMotion
+            ? ""
+            : "work-scroller-fade touch-pan-y select-none overflow-hidden cursor-grab active:cursor-grabbing"
         }`}
       >
         <div
