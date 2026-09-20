@@ -202,15 +202,33 @@ export default function Portfolio() {
 
     let dragging = false;
     let lastX = 0;
+    let startX = 0;
+    let startY = 0;
+    // null until enough movement happens to tell whether this gesture is a
+    // horizontal swipe (we drive it) or a vertical one (native scroll drives
+    // it, untouched — we do nothing at all so it behaves exactly as before).
+    let lockedAxis: "x" | "y" | null = null;
 
     const onPointerDown = (e: PointerEvent) => {
       if (e.pointerType === "mouse" && e.button !== 0) return;
       dragging = true;
-      lastX = e.clientX;
+      lockedAxis = null;
+      startX = lastX = e.clientX;
+      startY = e.clientY;
     };
 
     const onPointerMove = (e: PointerEvent) => {
       if (!dragging) return;
+
+      if (!lockedAxis) {
+        const totalX = e.clientX - startX;
+        const totalY = e.clientY - startY;
+        if (Math.abs(totalX) < 8 && Math.abs(totalY) < 8) return;
+        lockedAxis = Math.abs(totalX) > Math.abs(totalY) ? "x" : "y";
+        lastX = e.clientX;
+      }
+      if (lockedAxis === "y") return; // vertical: leave entirely to native scroll
+
       const dx = e.clientX - lastX;
       lastX = e.clientX;
       if (!dx) return;
@@ -222,7 +240,7 @@ export default function Portfolio() {
       // card — feels sluggish. DRAG_SENSITIVITY makes the cards travel
       // faster than the finger so a normal swipe gets you noticeably
       // further, independent of how the vertical scroll is paced.
-      const DRAG_SENSITIVITY = 2.6;
+      const DRAG_SENSITIVITY = 4;
       const scale = ((st.end - st.start) / distance) * DRAG_SENSITIVITY;
       // `behavior: "instant"` is required here — the page sets a global
       // scroll-behavior: smooth, which the legacy two-arg scrollBy(x, y)
@@ -234,6 +252,7 @@ export default function Portfolio() {
 
     const endDrag = () => {
       dragging = false;
+      lockedAxis = null;
     };
 
     wrap.addEventListener("pointerdown", onPointerDown);
