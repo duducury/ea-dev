@@ -6,6 +6,7 @@ import Technologies from "@/components/Technologies";
 import ForWho from "@/components/ForWho";
 import Developers from "@/components/Developers";
 import About from "@/components/About";
+import IdeaToProduct from "@/components/IdeaToProduct";
 import Process from "@/components/Process";
 import Pricing from "@/components/Pricing";
 import Contact from "@/components/Contact";
@@ -23,6 +24,7 @@ export default function Home() {
         <ForWho />
         <Developers />
         <About />
+        <IdeaToProduct />
         <Process />
         <Pricing />
         <Contact />

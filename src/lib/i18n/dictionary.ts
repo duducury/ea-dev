@@ -41,6 +41,12 @@ export interface Dictionary {
     heading: string;
     body: string;
   };
+  reveal: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    phases: string[];
+  };
   process: {
     eyebrow: string;
     title: string;
@@ -182,6 +188,13 @@ export const dictionary: Record<Language, Dictionary> = {
       heading:
         "Não construímos só sites. Construímos ferramentas digitais que ajudam negócios a crescer.",
       body: "Somos dois desenvolvedores e trabalhamos diretamente com cada cliente para entender o negócio antes de escrever uma linha de código. Seja um site simples ou um sistema completo, cada projeto é pensado especificamente para aquele negócio. Sem templates genéricos, sem atalhos.",
+    },
+    reveal: {
+      eyebrow: "Tecnologia",
+      title: "Da ideia ao produto.",
+      subtitle:
+        "Cada projeto passa por camadas de planejamento, design e engenharia até chegar pronto para o seu negócio.",
+      phases: ["Ideia", "Estrutura", "Produto"],
     },
     process: {
       eyebrow: "Processo",
@@ -378,6 +391,13 @@ export const dictionary: Record<Language, Dictionary> = {
       heading:
         "We don't just build websites. We build digital tools that help businesses grow.",
       body: "We're two developers who work directly with each client to understand the business before writing a single line of code. Whether it's a simple website or a full system, every project is built specifically for that business. No generic templates, no shortcuts.",
+    },
+    reveal: {
+      eyebrow: "Technology",
+      title: "From idea to product.",
+      subtitle:
+        "Every project moves through layers of planning, design and engineering before it's ready for your business.",
+      phases: ["Idea", "Structure", "Product"],
     },
     process: {
       eyebrow: "Process",
