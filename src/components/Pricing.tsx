@@ -54,11 +54,11 @@ export default function Pricing() {
         </h2>
         <p className="mt-4 max-w-2xl text-sm text-black/60 md:text-lg">{t.pricing.note}</p>
 
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 md:mt-16 lg:grid-cols-4">
+        <div className="no-scrollbar -mx-6 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 md:mt-16 lg:grid-cols-4">
           {t.pricing.plans.map((plan) => (
             <div
               key={plan.name}
-              className="pricing-card group flex flex-col rounded-2xl border border-border bg-surface p-6 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/50 hover:shadow-[0_0_40px_-12px_var(--color-accent-glow)] md:rounded-3xl md:p-8"
+              className="pricing-card group flex w-[80%] shrink-0 snap-center flex-col rounded-2xl border border-border bg-surface p-6 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/50 hover:shadow-[0_0_40px_-12px_var(--color-accent-glow)] sm:w-auto sm:shrink md:rounded-3xl md:p-8"
             >
               <h3 className="text-lg font-bold text-text md:text-xl">{plan.name}</h3>
               <p className="mt-2 text-2xl font-bold text-accent md:text-3xl">{plan.price}</p>
