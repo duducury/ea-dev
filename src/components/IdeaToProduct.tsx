@@ -193,7 +193,7 @@ export default function IdeaToProduct() {
     return (
       <section
         id="reveal"
-        className="services-atmosphere relative flex flex-col items-center gap-10 px-6 py-20 text-center md:flex-row-reverse md:items-center md:justify-between md:px-10 md:py-28 md:text-left"
+        className="relative flex flex-col items-center gap-10 bg-black px-6 py-20 text-center md:flex-row-reverse md:items-center md:justify-between md:px-10 md:py-28 md:text-left"
       >
         <div className="relative aspect-[9/16] h-[50vh] max-h-[520px] w-auto shrink-0">
           <Image
@@ -221,7 +221,7 @@ export default function IdeaToProduct() {
     <section
       id="reveal"
       ref={containerRef}
-      className="services-atmosphere relative"
+      className="relative bg-black"
       style={{ height: `${SEQUENCE_HEIGHT_VH}vh` }}
     >
       <div className="sticky top-0 h-dvh w-full overflow-hidden">
