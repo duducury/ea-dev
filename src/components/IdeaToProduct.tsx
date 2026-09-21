@@ -225,8 +225,8 @@ export default function IdeaToProduct() {
       style={{ height: `${SEQUENCE_HEIGHT_VH}vh` }}
     >
       <div className="sticky top-0 h-dvh w-full overflow-hidden">
-        <div className="flex h-full w-full flex-col items-center justify-center gap-6 px-6 pb-6 pt-20 text-center sm:gap-8 sm:pt-24 md:px-10 lg:flex-row lg:justify-between lg:gap-16 lg:px-16 lg:pb-0 lg:pt-0 lg:text-left xl:px-24">
-          <div className="relative order-1 aspect-[9/16] h-[34vh] max-h-[380px] w-auto shrink-0 sm:h-[38vh] sm:max-h-[440px] md:h-[42vh] md:max-h-[480px] lg:order-1 lg:h-[74vh] lg:max-h-[680px]">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-3 px-6 pb-4 pt-16 text-center sm:gap-4 sm:pt-20 md:px-10 lg:flex-row lg:justify-between lg:gap-16 lg:px-16 lg:pb-0 lg:pt-0 lg:text-left xl:px-24">
+          <div className="relative order-1 aspect-[9/16] h-[60vh] max-h-[620px] w-auto shrink-0 sm:h-[62vh] sm:max-h-[660px] md:h-[56vh] md:max-h-[600px] lg:order-1 lg:h-[74vh] lg:max-h-[680px]">
             {isLoaded ? (
               <SequenceCanvas images={imagesRef} progress={smoothProgress} isLoaded={isLoaded} />
             ) : (
@@ -247,17 +247,17 @@ export default function IdeaToProduct() {
           </div>
 
           <div className="order-2 flex max-w-xl flex-col items-center lg:order-2 lg:items-start">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent sm:text-xs">
               {t.reveal.eyebrow}
             </p>
-            <h2 className="mt-3 text-[clamp(26px,6vw,48px)] font-bold leading-[1.05] tracking-tight text-white sm:mt-4 lg:text-[clamp(34px,3vw,56px)]">
+            <h2 className="mt-2 text-[clamp(22px,6vw,40px)] font-bold leading-[1.05] tracking-tight text-white sm:mt-3 lg:mt-4 lg:text-[clamp(34px,3vw,56px)]">
               {t.reveal.title}
             </h2>
-            <p className="mt-3 max-w-sm text-sm text-white/60 sm:mt-4 sm:text-base lg:max-w-md">
+            <p className="mt-2 max-w-sm text-xs text-white/60 sm:mt-3 sm:text-sm lg:mt-4 lg:max-w-md lg:text-base">
               {t.reveal.subtitle}
             </p>
 
-            <div className="mt-5 flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent sm:mt-6 sm:gap-3 sm:text-xs">
+            <div className="mt-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent sm:mt-4 sm:gap-3 sm:text-xs">
               {t.reveal.phases.map((phase, i) => (
                 <div key={phase} className="flex items-center gap-2 sm:gap-3">
                   {i > 0 && <span aria-hidden="true" className="h-px w-4 bg-white/20 sm:w-6" />}
