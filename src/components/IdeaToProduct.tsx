@@ -225,8 +225,8 @@ export default function IdeaToProduct() {
       style={{ height: `${SEQUENCE_HEIGHT_VH}vh` }}
     >
       <div className="sticky top-0 h-dvh w-full overflow-hidden">
-        <div className="flex h-full w-full flex-col items-center justify-center gap-3 px-6 pb-4 pt-16 text-center sm:gap-4 sm:pt-20 md:px-10 lg:flex-row lg:justify-between lg:gap-16 lg:px-16 lg:pb-0 lg:pt-0 lg:text-left xl:px-24">
-          <div className="relative order-1 aspect-[9/16] h-[60vh] max-h-[620px] w-auto shrink-0 sm:h-[62vh] sm:max-h-[660px] md:h-[56vh] md:max-h-[600px] lg:order-1 lg:h-[74vh] lg:max-h-[680px]">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-3 px-6 pb-8 pt-16 text-center sm:gap-4 sm:pt-20 md:px-10 lg:flex-row lg:justify-center lg:gap-20 lg:px-16 lg:pb-0 lg:pt-0 lg:text-left xl:gap-28 xl:px-24">
+          <div className="relative order-1 aspect-[9/16] h-[78vh] max-h-[780px] w-auto shrink-0 sm:h-[80vh] sm:max-h-[820px] md:h-[76vh] md:max-h-[780px] lg:order-1 lg:h-[74vh] lg:max-h-[680px]">
             {isLoaded ? (
               <SequenceCanvas images={imagesRef} progress={smoothProgress} isLoaded={isLoaded} />
             ) : (
@@ -246,7 +246,7 @@ export default function IdeaToProduct() {
             )}
           </div>
 
-          <div className="order-2 flex max-w-xl flex-col items-center lg:order-2 lg:items-start">
+          <div className="order-2 hidden max-w-xl flex-col items-center lg:order-2 lg:flex lg:items-start">
             <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent sm:text-xs">
               {t.reveal.eyebrow}
             </p>
